@@ -1,11 +1,158 @@
 html, body {
     height: 100%;
-    background: #a78660;
-    text-align: center;
-    color: #e0d336;
+    background: lightgrey;
+    text-align: left;
+    color: black;
 }
 
-h1 {
-    user-select: none;
-    font-size: 5em;
+.sidenav {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 160px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: whitesmoke; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
 }
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: whitesmoke;
+  font-size: 19px;
+  color: black;
+
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: whitesmoke;
+}
+
+.active {
+  background-color: white;
+}
+
+/* Style page content */
+.main {
+  margin-left: 160px; /* Same as the width of the sidebar */
+  padding: 0px 10px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.button {
+  background-color: lightgrey;
+  border: 1px solid grey;
+  border-radius: 12px;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: Courier, serif;
+  font-size: 5px;
+  margin: 4px 2px;
+}
+
+input[type="text"] {
+  background-color: lightgrey;
+  border: 1px solid grey;
+  border-radius: 12px;
+  color: black;
+  height: 40px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: Courier, serif;
+  font-size: 20px;
+  margin-left: 50px ;
+  margin-top: 4px;
+}
+input[type="submit"] {
+  background-color: lightgrey;
+  border: 1px solid grey;
+  border-radius: 12px;
+  color: black;
+  height: 40px;
+  width: 90px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: Courier, serif;
+  font-size: 20px;
+  margin-right: -50px;
+  margin-top: 4px;
+  -webkit-appearance: none;
+}
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: block;
+  width: 160px;
+  height: 40px;
+
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 32px;
+  width: 32px;
+  left: 50px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: lightskyblue;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px grey;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(30px);
+  -ms-transform: translateX(30px);
+  transform: translateX(30px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
