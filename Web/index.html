@@ -8,7 +8,7 @@
         <div id="mainContainer">
             <!-- Dies ist der Code für die Aufgabe -->
 
-            <script src="oscillator.js"></script>
+
             <!--------------------------------------->
         </div>
 
@@ -40,12 +40,12 @@
           </div>
               <div class="right">
                   <span style="font-size: 15px">Current waveform: </span>
-                  <select style="margin-left: 20px; width: 120px" name="waveform">
-                  <option value="sine">Sine</option>
-                  <option value="square" selected>Square</option>
-                  <option value="sawtooth">Sawtooth</option>
-                  <option value="triangle">Triangle</option>
-                </select>
+                  <select style="margin-left: 20px; width: 120px" id="waveform">
+                      <option value="sine">sine</option>
+                      <option value="square" selected>square</option>
+                      <option value="sawtooth">sawtooth</option>
+                      <option value="triangle">triangle</option>
+                  </select>
               </div>
             <div class="settingsBar">
               <div class="left">
@@ -64,6 +64,6 @@
             </div>
         </div>
 
-
+    <script src="oscillator.js"></script>
     </body>
 </html>
