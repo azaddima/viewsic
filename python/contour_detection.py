@@ -97,7 +97,7 @@ def thresh_callback(val, frame_input):
 
 
 # VIDEO Processing
-cap = cv.VideoCapture('videos/dance.wmv')
+cap = cv.VideoCapture('../videos/dance.wmv')
 
 while cap.isOpened():
     ret, frame = cap.read()
