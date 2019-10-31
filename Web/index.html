@@ -38,11 +38,9 @@
                 <a>1/16</a>
               </div>
           </div>
-            <button id="playbtn">Play!</button>
-            <button id="stopbtn">Stop!</button>
               <div class="right">
-                  <span>Current waveform: </span>
-                  <select name="waveform">
+                  <span style="font-size: 15px">Current waveform: </span>
+                  <select style="margin-left: 20px; width: 120px" name="waveform">
                   <option value="sine">Sine</option>
                   <option value="square" selected>Square</option>
                   <option value="sawtooth">Sawtooth</option>
@@ -58,6 +56,10 @@
                   <option value="0.0" label="Mute">
                   <option value="1.0" label="100%">
                 </datalist>
+                <span style="margin-left: 20px">
+                    <button id="playbtn" onclick="playSound()">Play!</button>
+                    <button id="stopbtn" onclick="stopSound()">Stop!</button>
+                </span>
               </div>
             </div>
         </div>
