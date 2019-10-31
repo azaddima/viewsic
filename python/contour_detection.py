@@ -4,6 +4,9 @@ import numpy as np
 import argparse
 import random as rng
 
+import websocket
+websocket.start()
+
 rng.seed(12345)
 
 
@@ -12,7 +15,6 @@ def moment_thresh_callback(val, frame_input):
     frame_gray = frame_input
 
     canny_output = cv.Canny(frame_gray, threshold, threshold * 2)
-
     contours, _ = cv.findContours(canny_output, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
 
     # Get the moments
@@ -24,8 +26,8 @@ def moment_thresh_callback(val, frame_input):
     for i in range(len(contours)):
         # add 1e-5 to avoid division by zero
         mc[i] = (mu[i]['m10'] / (mu[i]['m00'] + 1e-5), mu[i]['m01'] / (mu[i]['m00'] + 1e-5))
-    # Draw contours
 
+    # Draw contours
     drawing = np.zeros((canny_output.shape[0], canny_output.shape[1], 3), dtype=np.uint8)
 
     for i in range(len(contours)):
@@ -39,7 +41,6 @@ def moment_thresh_callback(val, frame_input):
     for i in range(len(contours)):
         print(' * Contour[%d] - Area (M_00) = %.2f - Area OpenCV: %.2f - Length: %.2f' % (
         i, mu[i]['m00'], cv.contourArea(contours[i]), cv.arcLength(contours[i], True)))
-
 
 def boxes_thresh_callback(val, frame_input):
     threshold = val
@@ -74,7 +75,6 @@ def boxes_thresh_callback(val, frame_input):
 
     cv.imshow('Contours and Boxes', drawing)
 
-
 def thresh_callback(val, frame_input):
     threshold = val
     frame_gray = frame_input
@@ -96,9 +96,75 @@ def thresh_callback(val, frame_input):
     cv.imshow('Contours', drawing)
 
 
+def find_contours(frame_input):
+
+    # image to gray
+    frame_gray = cv.cvtColor(frame_input, cv.COLOR_BGR2GRAY)
+    frame_gray = cv.blur(frame_gray, (5,5))
+
+    # threshold the gray image
+    ret, thresh = cv.threshold(frame_gray, 127, 255, 0)
+
+    # get contours from image
+    contours, hierarchy = cv.findContours(thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
+
+    # convert to binary
+    drawing = np.zeros((thresh.shape[0],thresh.shape[1], 3), dtype=np.uint8)
+
+    # display contours
+    for i in range(len(contours)):
+        color = (rng.randint(0, 256), rng.randint(0, 256), rng.randint(0, 256))
+        cv.drawContours(drawing, contours, i, color, 2, cv.LINE_8, hierarchy, 0)
+        cv.drawContours(frame_input, contours, i, color, 2, cv.LINE_8, hierarchy, 0)
+
+    # show image
+    cv.imshow('Video Test', drawing)
+    cv.imshow('threshold Image', frame_input)
+
+    #print metadata
+    print(len(contours))
+
+def find_contours_canny(frame_input, threshold):
+    # image to gray
+    frame_gray = cv.cvtColor(frame_input, cv.COLOR_BGR2GRAY)
+    frame_gray = cv.blur(frame_gray, (5,5))
+
+    # threshold the gray image
+    canny_output = cv.Canny(frame_gray, threshold, threshold * 2)
+
+    # get contours from image
+    contours, hierarchy = cv.findContours(canny_output, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
+    # convert to binary
+    drawing = np.zeros((canny_output.shape[0],canny_output.shape[1], 3), dtype=np.uint8)
+
+    # display contours
+    for i in range(len(contours)):
+        color = (rng.randint(0, 256), rng.randint(0, 256), rng.randint(0, 256))
+
+        cnt = contours[i] # used for further use of properties
+        cv.drawContours(drawing, [cnt], 0, color, 2, cv.LINE_8, hierarchy, 0)
+        cv.drawContours(frame_input, [cnt], 0, color, 2, cv.LINE_8, hierarchy, 0)
+
+    # show image
+    cv.imshow('Video Test', drawing)
+    cv.imshow('threshold Image', frame_input)
+
+    #print metadata
+    print(len(contours))
+    return len(contours)
+
+
+
+#IMAGE PROCESSING
+img = cv.imread('../images/tuple.jpg')
+# find_contours(img)
+# find_contours_canny(img, 100)
+
+
+
+
 # VIDEO Processing
 cap = cv.VideoCapture('../videos/dance.wmv')
-
 while cap.isOpened():
     ret, frame = cap.read()
 
@@ -106,18 +172,25 @@ while cap.isOpened():
         break
 
     # GRAYSCALE AND BLUR
-    video_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    video_gray = cv.blur(video_gray, (3, 3))
+    #video_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    #video_gray = cv.blur(video_gray, (3, 3))
 
-    cv.imshow('Video', frame)
+    #cv.imshow('Video', frame)
+
+    # TEST FUNCTIONS
+    #find_contours(frame)
 
     # DETECTION FUNCTIONS
-    thresh_callback(40, video_gray)
-    boxes_thresh_callback(100, video_gray)
-    moment_thresh_callback(100, video_gray)
+    # thresh_callback(100, video_gray)
+    # boxes_thresh_callback(100, video_gray)
+    # moment_thresh_callback(100, video_gray)
+
+    c_count = find_contours_canny(frame, 50)
+    websocket.send(message='contours', data={'c_count': c_count})
 
     if cv.waitKey(30) != -1:
         break
+
 
 cap.release()
 cv.destroyAllWindows()
