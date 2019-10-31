@@ -32,19 +32,26 @@ function createNoteTable() {
     noteFreq[1]["A#"] = 58.270470189761239;
     noteFreq[1]["B"] = 61.735412657015513;
 }
+var cmajor = [32.703195662574829, 36.708095989675945, 41.203444614108741,
+              43.653528929125485, 48.999429497718661, 55.000000000000000,
+              61.735412657015513, 32.703195662574829 * 2];
 
 var context = new AudioContext(),
     oscillator,
     mousedown = false,
     gainNode = context.createGain();
-//let wavePicker = document.querySelector("select[name='waveform']");
+let wavePicker = document.querySelector("select[name='waveform']");
 //let type = wavePicker.options[wavePicker.selectedIndex].value;
+
+console.log(wavePicker);
 gainNode.connect(context.destination);
 
 function playSound() {
+    var e = document.getElementById("waveform");
+    var type = e.options[e.selectedIndex].text;
     oscillator = context.createOscillator();
     oscillator.connect(gainNode);
-    oscillator.type = "sawtooth";
+    oscillator.type = type;
     oscillator.frequency.setTargetAtTime(440, context.currentTime, 0.01);
     gainNode.gain.setTargetAtTime(0.9, context.currentTime, 0.01);
     oscillator.start(context.currentTime);
