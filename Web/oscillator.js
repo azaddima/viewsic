@@ -2,7 +2,6 @@
 let oscList = [];
 let masterGainNode = null;
 
-let wavePicker = document.querySelector("select[name='waveform']");
 let volumeControl = document.querySelector("input[name='volume']");
 
 let noteFreq = null;
@@ -38,33 +37,24 @@ var context = new AudioContext(),
     oscillator,
     mousedown = false,
     gainNode = context.createGain();
-
+//let wavePicker = document.querySelector("select[name='waveform']");
+//let type = wavePicker.options[wavePicker.selectedIndex].value;
 gainNode.connect(context.destination);
-
-document.getElementById('playbtn').addEventListener('click', playSound);
-
-
-document.addEventListener("mouseup", function(e) {
-    mousedown = false;
-
-    if (oscillator) {
-        oscillator.stop(context.currentTime);
-        oscillator.disconnect();
-    }
-});
-
-function calculateFrequencyAndGain() {
-    // fix for click sound bug:
-    oscillator.frequency.setTargetAtTime(440, context.currentTime, 0.01);
-    gainNode.gain.setTargetAtTime(0.9, context.currentTime, 0.01);
-}
 
 function playSound() {
     oscillator = context.createOscillator();
     oscillator.connect(gainNode);
+    oscillator.type = "sawtooth";
     oscillator.frequency.setTargetAtTime(440, context.currentTime, 0.01);
     gainNode.gain.setTargetAtTime(0.9, context.currentTime, 0.01);
     oscillator.start(context.currentTime);
+}
+
+function stopSound() {
+    if(oscillator){
+    oscillator.stop(context.currentTime);
+    oscillator.disconnect();
+    }
 }
 
 /* When the user clicks on the button,
