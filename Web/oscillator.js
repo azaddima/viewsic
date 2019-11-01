@@ -38,29 +38,30 @@ var cmajor = [32.703195662574829, 36.708095989675945, 41.203444614108741,
 
 var context = new AudioContext(),
     oscillator,
-    mousedown = false,
+    isPlaying = false;
     gainNode = context.createGain();
-let wavePicker = document.querySelector("select[name='waveform']");
-//let type = wavePicker.options[wavePicker.selectedIndex].value;
 
-console.log(wavePicker);
 gainNode.connect(context.destination);
 
 function playSound() {
-    var e = document.getElementById("waveform");
-    var type = e.options[e.selectedIndex].text;
-    oscillator = context.createOscillator();
-    oscillator.connect(gainNode);
-    oscillator.type = type;
-    oscillator.frequency.setTargetAtTime(440, context.currentTime, 0.01);
-    gainNode.gain.setTargetAtTime(0.9, context.currentTime, 0.01);
-    oscillator.start(context.currentTime);
+    if(isPlaying === false) {
+        var e = document.getElementById("waveform");
+        var type = e.options[e.selectedIndex].text;
+        oscillator = context.createOscillator();
+        oscillator.connect(gainNode);
+        oscillator.type = type;
+        oscillator.frequency.setTargetAtTime(440, context.currentTime, 0.01);
+        gainNode.gain.setTargetAtTime(0.9, context.currentTime, 0.01);
+        oscillator.start(context.currentTime);
+        isPlaying = true;
+    }
 }
 
 function stopSound() {
     if(oscillator){
     oscillator.stop(context.currentTime);
     oscillator.disconnect();
+    isPlaying = false;
     }
 }
 
