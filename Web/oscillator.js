@@ -39,9 +39,18 @@ var cmajor = [32.703195662574829, 36.708095989675945, 41.203444614108741,
 var context = new AudioContext(),
     oscillator,
     isPlaying = false;
-    gainNode = context.createGain();
+    gainNode = context.createGain(),
+    slider = document.getElementById("myRange"),
+    output = document.getElementById("demo");
+    output.innerHTML = slider.value;
 
 gainNode.connect(context.destination);
+
+slider.oninput = function() {
+  var gainValue = (this.value / 10);
+  output.innerHTML = gainValue + " dB";
+  gainNode.gain.value = gainValue;
+};
 
 function playSound() {
     if(isPlaying === false) {
@@ -51,7 +60,7 @@ function playSound() {
         oscillator.connect(gainNode);
         oscillator.type = type;
         oscillator.frequency.setTargetAtTime(440, context.currentTime, 0.01);
-        gainNode.gain.setTargetAtTime(0.9, context.currentTime, 0.01);
+        //gainNode.gain.setTargetAtTime(0.9, context.currentTime, 0.01);
         oscillator.start(context.currentTime);
         isPlaying = true;
     }
