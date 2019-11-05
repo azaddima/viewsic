@@ -36,7 +36,8 @@ function setOscillatorType() {
 }
 
 document.getElementById("playbtn").onclick = function () {
-    playSound(880)
+    playSound(freqValueContour)
+
 };
 
 
