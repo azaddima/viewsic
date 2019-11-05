@@ -45,15 +45,17 @@
             <option value="triangle">triangle</option>
         </select>
     </div>
-    <div style="margin-left: 30px; margin-top: 80px">
+    <div class="launchControl" >
+    <div class="playPause">
         <span>
             <button id="playbtn" onclick="playSound()">Play!</button>
             <button id="stopbtn" onclick="stopSound()">Stop!</button>
         </span>
     </div>
-    <div class="slidecontainer" style="margin-top: 5px">
+    <div class="slidecontainer">
         <p style="margin-left: 5px; margin-bottom: -2px">Volume: <span id="demo"></span>%</p>
         <input type="range" min="0" max="100" step="10" value="50" class="sliderVolume" id="myRange">
+    </div>
     </div>
 </div>
 
