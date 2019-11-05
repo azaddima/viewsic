@@ -149,21 +149,26 @@ def find_contours_canny(frame_input, threshold):
     cv.imshow('threshold Image', frame_input)
 
     # print metadata
-    contourCount = len(contours)
+    set_contour_count(len(contours))
 
 
 def get_contour_count():
-    return contourCount
+    return str(contour_count)
+
+
+def set_contour_count(value):
+    global contour_count
+    contour_count = value
 
 # Data
-contourCount = 0
+contour_count = 0
 
 # IMAGE PROCESSING
 # img = cv.imread('../images/tuple.jpg')
 # find_contours_canny(img, 80)
 
 # VIDEO Processing
-def startVideo():
+def start_video():
     cap = cv.VideoCapture('../videos/dance.wmv')
     while cap.isOpened():
         ret, frame = cap.read()
@@ -180,4 +185,3 @@ def startVideo():
     cap.release()
     cv.waitKey()
     cv.destroyAllWindows()
-
