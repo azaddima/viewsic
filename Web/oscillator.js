@@ -30,15 +30,17 @@ slider.oninput = function() {
         gainNode.gain.value = gainValue;
 };
 
+function setOscillatorType() {
+    let e = document.getElementById("waveform");
+    return oscillator.type = e.options[e.selectedIndex].text;
+}
+
 function playSound() {
     if(!isPlaying) {
-        let e = document.getElementById("waveform");
-        let type = e.options[e.selectedIndex].text;
         oscillator = context.createOscillator();
         oscillator.connect(gainNode);
-        oscillator.type = type;
-        oscillator.frequency.setTargetAtTime(440, context.currentTime, 0.01);
-        //gainNode.gain.setTargetAtTime(0.9, context.currentTime, 0.01);
+        setOscillatorType();
+        oscillator.frequency.value = 440;
         oscillator.start(context.currentTime);
         isPlaying = true;
     }
