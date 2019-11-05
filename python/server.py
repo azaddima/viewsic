@@ -10,6 +10,7 @@ async def positions(websocket, path):
         await websocket.send('poop')
         await asyncio.sleep(0.03333)
 
+
 start_server = websockets.serve(positions, "127.0.0.1", 8765)
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
@@ -18,10 +19,12 @@ asyncio.get_event_loop().run_forever()
 # loop = asyncio.new_event_loop()
 
 # Methode zum Starten des Servers mit erstelltem Event Loop
-def startServer(loop):
+
+
+def start_server(loop):
     asyncio.set_event_loop(loop)
-    start_server = websockets.serve(positions, "127.0.0.1", 8000)
-    asyncio.get_event_loop().run_until_complete(start_server)
+    run_server = websockets.serve(positions, "127.0.0.1", 8000)
+    asyncio.get_event_loop().run_until_complete(run_server)
     asyncio.get_event_loop().run_forever()
 
 # Starten des Servers in einem Thread
