@@ -7,6 +7,9 @@
 <body>
 <!-- SideBar navigation -->
 <div class="sidenav" >
+    <div class="colorwheel">
+        <span class="dot"></span>
+    </div>
     <label class="switch">
         <input type="checkbox">
         <span class="sliderMood round">
@@ -31,24 +34,26 @@
             <a>1/16</a>
         </div>
     </div>
-    <div class="right">
-        <span style="font-size: 15px">Current waveform: </span>
-        <select style="margin-left: 20px; width: 120px" id="waveform">
+    <div class="waveSelection">
+        <span>
+            <p1 style="font-size: 15px; margin-left: 5px; margin-bottom: 25px">Current waveform: </p1>
+        </span>
+        <select style="margin-left: 15px; margin-top: 5px; width: 80%; height: 30px" id="waveform">
             <option value="sine">sine</option>
             <option value="square" selected>square</option>
             <option value="sawtooth">sawtooth</option>
             <option value="triangle">triangle</option>
         </select>
     </div>
-    <div class="slidecontainer" style="margin-top: 10px">
-        <input type="range" min="0" max="100" step="10" value="50" class="sliderVolume" id="myRange">
-        <p>Volume: <span id="demo"></span>%</p>
-    </div>
-    <div>
-        <span style="margin-left: 20px">
+    <div style="margin-left: 30px; margin-top: 80px">
+        <span>
             <button id="playbtn" onclick="playSound()">Play!</button>
             <button id="stopbtn" onclick="stopSound()">Stop!</button>
         </span>
+    </div>
+    <div class="slidecontainer" style="margin-top: 5px">
+        <p style="margin-left: 5px; margin-bottom: -2px">Volume: <span id="demo"></span>%</p>
+        <input type="range" min="0" max="100" step="10" value="50" class="sliderVolume" id="myRange">
     </div>
 </div>
 
