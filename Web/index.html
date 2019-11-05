@@ -1,57 +1,57 @@
 <!doctype html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <title>Viewsic</title>
-    </head>
-    <body>
-        <!-- SideBar navigation -->
-        <div class="sidenav" >
-          <label class="switch">
-            <input type="checkbox">
-            <span class="sliderMood round">
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Viewsic</title>
+</head>
+<body>
+<!-- SideBar navigation -->
+<div class="sidenav" >
+    <label class="switch">
+        <input type="checkbox">
+        <span class="sliderMood round">
                 <pre style="font-family: Helvetica, serif;
                             font-size: 18px;
                             position: relative;
                             bottom: 9px;
                             text-shadow: #cccccc;">   :(                     (:</pre>
             </span>
-          </label>
+    </label>
 
-          <label>
-              <input type="submit", value="Tempo:">
-              <input type="text" placeholder="bpm">
-          </label>
+    <label>
+        <input type="submit", value="Tempo:">
+        <input type="text" placeholder="bpm">
+    </label>
 
-          <div class="dropdown">
-              <button onclick="myFunction()" class="dropbtn">Note Value</button>
-              <div id="myDropdown" class="dropdown-content">
-                <a>1/4</a>
-                <a>1/8</a>
-                <a>1/16</a>
-              </div>
-          </div>
-              <div class="right">
-                  <span style="font-size: 15px">Current waveform: </span>
-                  <select style="margin-left: 20px; width: 120px" id="waveform">
-                      <option value="sine">sine</option>
-                      <option value="square" selected>square</option>
-                      <option value="sawtooth">sawtooth</option>
-                      <option value="triangle">triangle</option>
-                  </select>
-              </div>
-            <div class="slidecontainer" style="margin-top: 10px">
-                <input type="range" min="0" max="100" step="10" value="50" class="sliderVolume" id="myRange">
-                <p>Volume: <span id="demo"></span>%</p>
-            </div>
-            <div>
-                <span style="margin-left: 20px">
-                    <button id="playbtn" onclick="playSound()">Play!</button>
-                    <button id="stopbtn" onclick="stopSound()">Stop!</button>
-                </span>
-            </div>
+    <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn">Note Value</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a>1/4</a>
+            <a>1/8</a>
+            <a>1/16</a>
         </div>
+    </div>
+    <div class="right">
+        <span style="font-size: 15px">Current waveform: </span>
+        <select style="margin-left: 20px; width: 120px" id="waveform">
+            <option value="sine">sine</option>
+            <option value="square" selected>square</option>
+            <option value="sawtooth">sawtooth</option>
+            <option value="triangle">triangle</option>
+        </select>
+    </div>
+    <div class="slidecontainer" style="margin-top: 10px">
+        <input type="range" min="0" max="100" step="10" value="50" class="sliderVolume" id="myRange">
+        <p>Volume: <span id="demo"></span>%</p>
+    </div>
+    <div>
+        <span style="margin-left: 20px">
+            <button id="playbtn" onclick="playSound()">Play!</button>
+            <button id="stopbtn" onclick="stopSound()">Stop!</button>
+        </span>
+    </div>
+</div>
 
-    <script src="oscillator.js"></script>
-    </body>
+<script src="oscillator.js"></script>
+</body>
 </html>
