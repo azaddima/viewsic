@@ -5,7 +5,7 @@ from python import contour_detection
 
 
 # Methode, die vom Server ausgeführt wird
-async def positions(websocket, path):
+async def video_data(websocket, path):
     while True:
         await websocket.send(contour_detection.get_contour_count())
         await asyncio.sleep(0.03333)
@@ -17,7 +17,7 @@ loop = asyncio.new_event_loop()
 # Methode zum Starten des Servers mit erstelltem Event Loop
 def start_server(loop):
    asyncio.set_event_loop(loop)
-   run_server = websockets.serve(positions, "127.0.0.1", 8765)
+   run_server = websockets.serve(video_data, "127.0.0.1", 8765)
    asyncio.get_event_loop().run_until_complete(run_server)
    asyncio.get_event_loop().run_forever()
 
