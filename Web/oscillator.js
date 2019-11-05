@@ -35,12 +35,18 @@ function setOscillatorType() {
     return oscillator.type = e.options[e.selectedIndex].text;
 }
 
-function playSound() {
+document.getElementById("playbtn").onclick = function () {
+    playSound(880)
+};
+
+
+
+function playSound(frequencyValContour) {
     if(!isPlaying) {
         oscillator = context.createOscillator();
         oscillator.connect(gainNode);
         setOscillatorType();
-        oscillator.frequency.value = 440;
+        oscillator.frequency.value = frequencyValContour;
         oscillator.start(context.currentTime);
         isPlaying = true;
     }
