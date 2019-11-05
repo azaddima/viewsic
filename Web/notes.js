@@ -1,7 +1,5 @@
-
-
-var noteFreq = [];
-var majorScales = [];
+let noteFreq = [];
+let majorScales = [];
 
 function createNoteTable(){
 
