@@ -1,67 +1,62 @@
 <!doctype html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <title>Viewsic</title>
-    </head>
-    <body>
-        <div id="mainContainer">
-            <!-- Dies ist der Code für die Aufgabe -->
-
-            <script src="oscillator.js"></script>
-            <!--------------------------------------->
-        </div>
-
-        <!-- SideBar navigation -->
-        <div class="sidenav" >
-          <label class="switch">
-            <input type="checkbox">
-            <span class="slider round">
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Viewsic</title>
+</head>
+<body>
+<!-- SideBar navigation -->
+<div class="sidenav" >
+    <div class="colorwheel">
+        <span class="dot"></span>
+    </div>
+    <label class="switch">
+        <input type="checkbox">
+        <span class="sliderMood round">
                 <pre style="font-family: Helvetica, serif;
                             font-size: 18px;
                             position: relative;
                             bottom: 9px;
                             text-shadow: #cccccc;">   :(                     (:</pre>
             </span>
-          </label>
+    </label>
 
-          <label>
-              <input type="submit", value="Tempo:">
-              <input type="text" placeholder="bpm">
-          </label>
+    <label>
+        <input type="submit", value="Tempo:">
+        <input type="text" placeholder="bpm">
+    </label>
 
-          <div class="dropdown">
-              <button onclick="myFunction()" class="dropbtn">Note Value</button>
-              <div id="myDropdown" class="dropdown-content">
-                <a>1/4</a>
-                <a>1/8</a>
-                <a>1/16</a>
-              </div>
-          </div>
-            <button id="playbtn">Play!</button>
-            <button id="stopbtn">Stop!</button>
-              <div class="right">
-                  <span>Current waveform: </span>
-                  <select name="waveform">
-                  <option value="sine">Sine</option>
-                  <option value="square" selected>Square</option>
-                  <option value="sawtooth">Sawtooth</option>
-                  <option value="triangle">Triangle</option>
-                </select>
-              </div>
-            <div class="settingsBar">
-              <div class="left">
-                <span>Volume: </span>
-                <input type="range" min="0.0" max="1.0" step="0.01"
-                    value="0.5" list="volumes" name="volume">
-                <datalist id="volumes">
-                  <option value="0.0" label="Mute">
-                  <option value="1.0" label="100%">
-                </datalist>
-              </div>
-            </div>
+    <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn">Note Value</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a>1/4</a>
+            <a>1/8</a>
+            <a>1/16</a>
         </div>
+    </div>
+    <div class="waveSelection">
+        <span>
+            <p1 style="font-size: 15px; margin-left: 5px; margin-bottom: 25px">Current waveform: </p1>
+        </span>
+        <select style="margin-left: 15px; margin-top: 5px; width: 80%; height: 30px" id="waveform">
+            <option value="sine">sine</option>
+            <option value="square" selected>square</option>
+            <option value="sawtooth">sawtooth</option>
+            <option value="triangle">triangle</option>
+        </select>
+    </div>
+    <div style="margin-left: 30px; margin-top: 80px">
+        <span>
+            <button id="playbtn" onclick="playSound()">Play!</button>
+            <button id="stopbtn" onclick="stopSound()">Stop!</button>
+        </span>
+    </div>
+    <div class="slidecontainer" style="margin-top: 5px">
+        <p style="margin-left: 5px; margin-bottom: -2px">Volume: <span id="demo"></span>%</p>
+        <input type="range" min="0" max="100" step="10" value="50" class="sliderVolume" id="myRange">
+    </div>
+</div>
 
-
-    </body>
+<script src="oscillator.js"></script>
+</body>
 </html>
