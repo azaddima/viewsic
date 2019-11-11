@@ -173,11 +173,12 @@ def start_video():
     while cap.isOpened():
         ret, frame = cap.read()
 
-        if ret == False:
-            break
-
-        cv.imshow('Video', frame)
-        find_contours_canny(frame, 80)
+        if ret:
+            cv.imshow('Video', frame)
+            find_contours_canny(frame, 80)
+        else:
+            print('no video')
+            cap.set(cv.CAP_PROP_POS_FRAMES, 0)
 
         if cv.waitKey(30) != -1:
             break
