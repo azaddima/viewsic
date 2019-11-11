@@ -30,24 +30,28 @@ slider.oninput = function() {
         gainNode.gain.value = gainValue;
 };
 
+
+// CHANGE WAVEFORM
 function setOscillatorType() {
-    let e = document.getElementById("waveform");
-    return oscillator.type = e.options[e.selectedIndex].text;
+        let waveformSelect = document.getElementById("waveform");
+        if(oscillator){
+            oscillator.type = waveformSelect.options[waveformSelect.selectedIndex].text;
+        }
+        console.log('waveform set');
 }
+
 
 document.getElementById("playbtn").onclick = function () {
     playSound(freqValueContour)
 
 };
 
-
-
-function playSound(frequencyValContour) {
+function playSound(freqValue) {
     if(!isPlaying) {
         oscillator = context.createOscillator();
         oscillator.connect(gainNode);
         setOscillatorType();
-        oscillator.frequency.value = frequencyValContour;
+        oscillator.frequency.value = freqValue;
         oscillator.start(context.currentTime);
         isPlaying = true;
     }
@@ -58,6 +62,14 @@ function stopSound() {
         oscillator.stop(context.currentTime);
         oscillator.disconnect();
         isPlaying = false;
+    }
+}
+
+function changeOscillatorFreq(freqValue){
+    if(oscillator){
+         oscillator.frequency.value = freqValue;
+    } else {
+        console.log('osc not active')
     }
 }
 

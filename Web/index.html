@@ -39,7 +39,7 @@
             <span>
                 <p1 style="font-size: 15px; margin-left: 5px; margin-bottom: 25px">Current waveform: </p1>
             </span>
-            <select style="margin-left: 15px; margin-top: 5px; width: 80%; height: 30px" id="waveform">
+            <select style="margin-left: 15px; margin-top: 5px; width: 80%; height: 30px" id="waveform" onchange="setOscillatorType()">
                 <option value="sine">sine</option>
                 <option value="square" selected>square</option>
                 <option value="sawtooth">sawtooth</option>
@@ -60,8 +60,8 @@
         </div>
     </div>
 
-    <script src="dataReceiver.js"></script>
     <script src="oscillator.js"></script>
+    <script src="dataReceiver.js"></script>
 
     </body>
 </html>
