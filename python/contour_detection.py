@@ -160,8 +160,10 @@ def set_contour_count(value):
     global contour_count
     contour_count = value
 
+
 # Data
 contour_count = 0
+
 
 # IMAGE PROCESSING
 # img = cv.imread('../images/tuple.jpg')
