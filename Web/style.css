@@ -264,7 +264,6 @@ input:checked + .sliderMood:before {
 .dot{
   border-radius: 50%;
   border-color: lightgrey;
-  border
 
   height: 30px;
   width: 30px;
