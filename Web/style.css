@@ -269,8 +269,10 @@ input:checked + .sliderMood:before {
   width: 30px;
 }
 
-#redDot{
-  background-color: red;
-  margin-left: 43%;
-  margin-top: 5%;
+.color{
+  margin-left: 5px;
+  margin-top: -10px;
+  margin-bottom: 5px;
+  height: 150px;
+  width: 150px;
 }
