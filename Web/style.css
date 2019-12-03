@@ -261,5 +261,11 @@ input:checked + .sliderMood:before {
   border-radius: 50%;
   display: inline-block;
 }
+.dot{
+  border-radius: 50%;
+  position: relative;
+}
 
-
+#redDot{
+  background-color: red;
+}
