@@ -39,7 +39,9 @@ function setOscillatorType() {
 
 
 document.getElementById("playbtn").onclick = function () {
-    playSound(freqValueContour)
+
+    //todo - set default note?
+    playSound(0);
 
 };
 
