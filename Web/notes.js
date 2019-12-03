@@ -1,5 +1,4 @@
 let noteFreq = [];
-let majorScales = [];
 
 function createNoteTable(){
 
@@ -71,5 +70,4 @@ function createScale(keyNote, octave = 3, myScale = [0, 2, 4, 5, 7, 9, 11] ){
     return scale;
 }
 
-let array = createScale(4, 2);
 
