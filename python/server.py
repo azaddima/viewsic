@@ -4,11 +4,11 @@ import websockets
 from python import contour_detection
 
 
-# Methode, die vom Server ausgeführt wird
+
 async def video_data(websocket, path):
     while True:
         await websocket.send(contour_detection.get_contour_count())
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(0.5)
 
 
 # Event Loop erstellen, da der Server in einem anderem Thread laufen soll

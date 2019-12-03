@@ -7,9 +7,10 @@ function createNoteTable(){
         noteFreq[i] = [];
     }
 
-   noteFreq[0][0] = 27.500000000000000;
-   noteFreq[0][1] = 29.135235094880619;
-   noteFreq[0][2] = 30.867706328507756;
+    // Init Octave 1
+   noteFreq[0][9] = 27.500000000000000;
+   noteFreq[0][10] = 29.135235094880619;
+   noteFreq[0][11] = 30.867706328507756;
 
    noteFreq[1][0] = 32.703195662574829;
    noteFreq[1][1] = 34.647828872109012;
@@ -24,24 +25,51 @@ function createNoteTable(){
    noteFreq[1][10] = 58.270470189761239;
    noteFreq[1][11] = 61.735412657015513;
 
+    // Calculate octave:0
+   for(index = 0; index < 9; index++){
+       noteFreq[0][index] = noteFreq[1][index] / 2;
+   }
+
+    // Calculate Octave:2-6
    for (let octave = 2; octave < noteFreq.length; octave++) {
        for (let note = 0; note < 12; note++) {
            noteFreq[octave][note] = noteFreq[octave - 1][note] * 2   
        }
    }
+
 }
 
 createNoteTable();
-console.log(noteFreq[0].length);
-console.log("hello");
 
-function createMajorScale(){
-    // 0 2 4 5 7 9 11
-    scales = [];
-    for(var i = 0; i < 8; i++){
-        scales[i] = [];
-    }       
+function createScale(keyNote, octave = 3, myScale = [0, 2, 4, 5, 7, 9, 11] ){
+    console.log('Scale length:' + myScale.length);
 
-    scale[i][0] = noteFreq[1]
+    // Create empty scale
+    let scale = [];
+
+    let currentOctave = octave;
+    let currentNote = keyNote;
+    for(scaleIndex = 0; scaleIndex < myScale.length; scaleIndex++){
+    
+        scale[scaleIndex] = noteFreq[currentOctave][currentNote];
+        console.log('Note: ' + currentNote + ', Octave: ' + currentOctave);
+
+        // stop calculation if last note is added to scale
+        if(scaleIndex == myScale.length - 1) break;
+
+        //todo - cant go above octave 5, because the scale static: make dynamic when going above
+        // calculate next note position
+        currentNote += myScale[scaleIndex+1] - myScale[scaleIndex];
+        if(currentNote > 11){
+            currentNote = currentNote % 12;
+            currentOctave++;
+        }
+
+    }
+
+    //console.log(scale);
+    return scale;
 }
+
+let array = createScale(4, 2);
 

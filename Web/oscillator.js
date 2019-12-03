@@ -9,9 +9,6 @@ let customWaveform = null;
 let sineTerms = null;
 let cosineTerms = null;*/
 
-let cmajor = [32.703195662574829, 36.708095989675945, 41.203444614108741,
-    43.653528929125485, 48.999429497718661, 55.000000000000000,
-    61.735412657015513, 32.703195662574829 * 2];
 
 let context = new AudioContext(),
     oscillator,

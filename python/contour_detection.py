@@ -175,7 +175,7 @@ def start_video():
 
         if ret:
             cv.imshow('Video', frame)
-            find_contours_canny(frame, 80)
+            find_contours_canny(frame, 30)
         else:
             print('no video')
             cap.set(cv.CAP_PROP_POS_FRAMES, 0)
