@@ -251,13 +251,15 @@ input:checked + .sliderMood:before {
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
 
-.dot{
+.wheel{
   height: 150px;
   width: 150px;
   margin-top: -5px;
   margin-bottom: 5px;
   margin-left: 5px;
-  background-color: blue;
+  background-color: grey;
   border-radius: 50%;
   display: inline-block;
 }
+
+
