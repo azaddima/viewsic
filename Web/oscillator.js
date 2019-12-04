@@ -30,6 +30,11 @@ slider.oninput = function() {
         gainNode.gain.value = gainValue;
 };
 
+sliderBPM.oninput = function() {
+    let viewValue = this.value;
+        outputBPM.innerHTML = viewValue + "";
+};
+
 
 // CHANGE WAVEFORM
 function setOscillatorType() {
