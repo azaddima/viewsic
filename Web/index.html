@@ -26,7 +26,8 @@
             <span>
                 <p1 style="font-size: 15px; margin-left: 5px; margin-bottom: 25px">Current waveform: </p1>
             </span>
-            <select style="margin-left: 15px; margin-top: 5px; width: 80%; height: 30px" id="waveform" onchange="setOscillatorType()">
+            <select style="margin-left: 15px; margin-top: 5px; width: 80%; height: 30px" id="waveform"
+                    onchange="setOscillatorType()">
                 <option value="sine">sine</option>
                 <option value="square" selected>square</option>
                 <option value="sawtooth">sawtooth</option>
@@ -41,8 +42,8 @@
             </span>
         </div>
         <div class="slidecontainer">
-            <p style="margin-left: 5px; margin-bottom: -2px">Volume: <span id="demo"></span>%</p>
-            <input type="range" min="0" max="100" step="10" value="50" class="sliderVolume" id="myRange">
+            <p style="margin-left: 5px; margin-bottom: -2px">Volume: <span id="volumeOut"></span>%</p>
+            <input type="range" min="0" max="100" step="10" value="50" class="sliderVolume" id="volume">
         </div>
         </div>
     </div>
