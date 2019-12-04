@@ -11,29 +11,16 @@
         <div class="colorwheel">
             <img class="color" src="../images/pic_rgb_wheel.gif" alt="wheel">
         </div>
-        <label class="switch">
-            <input type="checkbox">
-            <span class="sliderMood round">
-                    <pre style="font-family: Helvetica, serif;
-                                font-size: 18px;
-                                position: relative;
-                                bottom: 9px;
-                                text-shadow: #cccccc;">   :(                     (:</pre>
-                </span>
-        </label>
-
-        <label>
-            <input type="submit" value="Tempo:">
-            <input type="text" placeholder="bpm">
-        </label>
-
-        <div class="dropdown">
-            <button onclick="myFunction()" class="dropbtn">Note Value</button>
-            <div id="myDropdown" class="dropdown-content">
-                <a>1/4</a>
-                <a>1/8</a>
-                <a>1/16</a>
-            </div>
+        <div class="scaleSelection">
+            <span>
+                <p1 style="font-size: 15px; margin-left: 5px; margin-bottom: 25px">Scale: </p1>
+            </span>
+            <select style="margin-left: 15px; margin-top: 5px; width: 80%; height: 30px" id="scales" onchange="createScale()">
+                <option value="major">Major</option>
+                <option value="minor" selected>Minor</option>
+                <option value="pentatonicMajor">Pentatonic Major</option>
+                <option value="pentatonicMajor">Pentatonic Minor</option>
+            </select>
         </div>
         <div class="waveSelection">
             <span>
