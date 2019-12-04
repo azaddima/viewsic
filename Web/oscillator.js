@@ -14,9 +14,12 @@ let context = new AudioContext(),
     oscillator,
     isPlaying = false;
     gainNode = context.createGain(),
-    slider = document.getElementById("myRange"),
-    output = document.getElementById("demo");
+    slider = document.getElementById("volume"),
+    output = document.getElementById("volumeOut"),
+    sliderBPM = document.getElementById("tempo"),
+    outputBPM = document.getElementById("bpm");
     output.innerHTML = slider.value;
+    outputBPM.innerHTML = sliderBPM.value;
 
 gainNode.connect(context.destination);
 
