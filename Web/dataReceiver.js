@@ -3,14 +3,13 @@ let socket = new WebSocket("ws://127.0.0.1:8765/");
 
 socket.onmessage = function (event) {
 
-   //todo - make this an event?
-   data = event.data;
+   data = JSON.parse(event.data);
 
    if(true){
          console.log("Data received: " + data);
    }
 
-   //todo - change method access!
+   //todo - add update method which accesses all needed methods!
    calcActiveSound(data);
    //changeOscillatorFreq(freqValueContour);
 };
