@@ -26,12 +26,14 @@ def send_message():
 
 def process_message(data):
 
+    print(json.loads(data))
+    decodedData = json.loads(data)
 
-    if(data == 'videostatus'):
+    if(decodedData[0] == 'videostatus'):
         # code if video is paused / played
         return 0
 
-    if(data == 'bpm'):
-        tempo_changer.update()
+    if(decodedData[0] == 'bpm'):
+        tempo_changer.update(int(decodedData[1]))
 
 
