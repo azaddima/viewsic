@@ -8,7 +8,10 @@
 <body>
     <div class="sidenav" >
         <div class="colorwheel">
-            <img class="color" src="../images/ColorWheel.png" alt="wheel">
+            <canvas id="canvasWheel" width="160" height="160" style="width: 160px; height: 160px;">
+            Your browser does not support the HTML5 canvas tag.
+            </canvas>
+            <img id="sourceImage" class="color" src="../images/ColorWheel.png" alt="wheel">
         </div>
         <div class="scaleSelection">
             <span>
@@ -56,6 +59,7 @@
     <script src="dataReceiver.js"></script>
     <script src="notes.js"></script>
     <script src="SoundManager.js"></script>
+    <script src="colorPicker.js"></script>
 
     </body>
 </html>
