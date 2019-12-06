@@ -4,16 +4,32 @@ import websockets
 
 from python import contour_detection
 from python import data_handler
+from python import tempo_changer
+
+sleepTime = 0.3
+def changeSleepTime(value):
+    global sleepTime
+    sleepTime = value
 
 
-
-async def video_data(websocket, path):
+async def producer_handler(websocket, path):
     while True:
-        # message = await producer()
-        # await websocket.send(30)
-        await websocket.send(data_handler.prepare_message_send())
-        # await websocket.send(20)
-        await asyncio.sleep(1)
+        message = await websocket.recv()
+        print(message)
+
+        await websocket.send(data_handler.send_message())
+        await asyncio.sleep(tempo_changer.message_interval)
+
+
+
+async def consumer_handler(websocket, path):
+    async for message in websocket:
+        print(message)
+        await data_handler.process_message(message)
+
+
+
+
 
 
 # Event Loop erstellen, da der Server in einem anderem Thread laufen soll
@@ -23,8 +39,12 @@ loop = asyncio.new_event_loop()
 # Methode zum Starten des Servers mit erstelltem Event Loop
 def start_server(loop):
     asyncio.set_event_loop(loop)
-    run_server = websockets.serve(video_data, "127.0.0.1", 8765)
+
+    run_server = websockets.serve(producer_handler, "127.0.0.1", 8765)
+    receive_server = websockets.serve(consumer_handler, "127.0.0.1", 1234)
+
     asyncio.get_event_loop().run_until_complete(run_server)
+    asyncio.get_event_loop().run_until_complete(receive_server)
     asyncio.get_event_loop().run_forever()
 
 
