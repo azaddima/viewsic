@@ -153,8 +153,8 @@ def find_contours_canny(frame_input, threshold):
 
 
 def get_contour_count():
-    return str(contour_count)
-
+    # return str(contour_count)
+    return contour_count
 
 def set_contour_count(value):
     global contour_count

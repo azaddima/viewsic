@@ -1,4 +1,5 @@
 from python import contour_detection
+import json
 
 def prepare_message_send():
  
@@ -18,7 +19,9 @@ def prepare_message_send():
     avrg_color = 0
     data.append(avrg_color)
 
-    return data
+    jsonData = json.dumps(data)
+
+    return jsonData
 
 
 def process_message_receive(data):

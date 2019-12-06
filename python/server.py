@@ -1,15 +1,19 @@
 import threading
 import asyncio
 import websockets
+
 from python import contour_detection
+from python import data_handler
 
 
 
 async def video_data(websocket, path):
     while True:
         # message = await producer()
-        await websocket.send(contour_detection.get_contour_count())
-        await asyncio.sleep(0.2)
+        # await websocket.send(30)
+        await websocket.send(data_handler.prepare_message_send())
+        # await websocket.send(20)
+        await asyncio.sleep(1)
 
 
 # Event Loop erstellen, da der Server in einem anderem Thread laufen soll
