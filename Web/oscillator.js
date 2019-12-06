@@ -14,9 +14,12 @@ let context = new AudioContext(),
     oscillator,
     isPlaying = false;
     gainNode = context.createGain(),
-    slider = document.getElementById("myRange"),
-    output = document.getElementById("demo");
+    slider = document.getElementById("volume"),
+    output = document.getElementById("volumeOut"),
+    sliderBPM = document.getElementById("tempo"),
+    outputBPM = document.getElementById("bpm");
     output.innerHTML = slider.value;
+    outputBPM.innerHTML = sliderBPM.value;
 
 gainNode.connect(context.destination);
 
@@ -25,6 +28,11 @@ slider.oninput = function() {
         viewValue = gainValue * 100;
         output.innerHTML = viewValue + "";
         gainNode.gain.value = gainValue;
+};
+
+sliderBPM.oninput = function() {
+    let viewValue = this.value;
+        outputBPM.innerHTML = viewValue + "";
 };
 
 
@@ -71,23 +79,3 @@ function changeOscillatorFreq(freqValue){
         console.log('osc not active')
     }
 }
-
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-        let dropdowns = document.getElementsByClassName("dropdown-content");
-        let i;
-        for (i = 0; i < dropdowns.length; i++) {
-            let openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-};
