@@ -28,11 +28,15 @@ slider.oninput = function() {
         viewValue = gainValue * 100;
         output.innerHTML = viewValue + "";
         gainNode.gain.value = gainValue;
+
 };
 
 sliderBPM.oninput = function() {
     let viewValue = this.value;
         outputBPM.innerHTML = viewValue + "";
+
+    sendMessage('bpm', viewValue);
+
 };
 
 
@@ -64,6 +68,8 @@ function playSound(freqValue) {
     }
 }
 
+let sec = 1 / (60 * (60/120));
+
 function stopSound() {
     if(oscillator){
         oscillator.stop(context.currentTime);
@@ -79,3 +85,6 @@ function changeOscillatorFreq(freqValue){
         console.log('osc not active')
     }
 }
+
+
+
