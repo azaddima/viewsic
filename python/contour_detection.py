@@ -171,7 +171,7 @@ contour_count = 0
 
 # VIDEO Processing
 def start_video():
-    cap = cv.VideoCapture('../videos/dance.wmv')
+    cap = cv.VideoCapture('../videos/roomTest.mp4')
     while cap.isOpened():
         ret, frame = cap.read()
 
