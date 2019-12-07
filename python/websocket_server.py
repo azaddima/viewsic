@@ -43,4 +43,4 @@ serverThread = threading.Thread(target=start_server, args=[loop], daemon=True)
 serverThread.start()
 
 # Start programm logic
-contour_detection.start_video()
+#contour_detection.start_video()

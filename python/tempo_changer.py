@@ -1,5 +1,5 @@
 # from python import websocket_server
-#todo - change variable access
+# todo - change variable access
 message_interval = 0.5
 
 def update(data):

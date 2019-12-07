@@ -3,8 +3,10 @@ import cv2 as cv
 import numpy as np
 import argparse
 import random as rng
-
 rng.seed(12345)
+
+from python import flask_server
+flask_server.start()
 
 
 def moment_thresh_callback(val, frame_input):
@@ -164,11 +166,6 @@ def set_contour_count(value):
 # Data
 contour_count = 0
 
-
-# IMAGE PROCESSING
-# img = cv.imread('../images/tuple.jpg')
-# find_contours_canny(img, 80)
-
 # VIDEO Processing
 def start_video():
     cap = cv.VideoCapture('../videos/roomTest.mp4')
@@ -178,6 +175,7 @@ def start_video():
         if ret:
             cv.imshow('Video', frame)
             find_contours_canny(frame, 30)
+            flask_server.send(message= 'soundData', data={'contour': contour_count })
         else:
             print('no video')
             cap.set(cv.CAP_PROP_POS_FRAMES, 0)
@@ -188,3 +186,5 @@ def start_video():
     cap.release()
     cv.waitKey()
     cv.destroyAllWindows()
+
+start_video()

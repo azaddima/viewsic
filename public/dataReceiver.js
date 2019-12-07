@@ -11,7 +11,7 @@ socket.onmessage = function (event) {
    }
 
    //todo - add update method which accesses all needed methods!
-   calcActiveSound(data);
+   calcActivpeSound(data);
    //changeOscillatorFreq(freqValueContour);
 };
 
@@ -24,6 +24,24 @@ function sendMessage(type, data){
       if(sendSocket.readyState == WebSocket.OPEN){
             console.log('trying to send message');
             sendSocket.send(jsonData);
+            sendSocket.send(jsonData);
 
       }
+}
+
+function initialize(){
+	let socket = io.connect();
+
+
+	socket.on("soundData", function(data){
+            //document.getElementById("label").innerHTML = `Position: x=${data.x}, y=${data.y}`;
+            console.log('sounddata received:' +  data);
+            calcActiveSound(data);
+	});
+
+	socket.on('outputFrame'), function (data) {
+        //decode byte array
+
+    }
+
 }

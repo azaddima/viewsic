@@ -13,10 +13,10 @@ let activeScale = [];
 let selectedScaleIndex = document.getElementById("scales").selectedIndex;
 
 function loadScale(keyNote, octave, scale){
-    activeScale = createScale(4, 3, scale );
+    activeScale = createScale(keyNote, octave, scale );
 }
 // default scale
-loadScale();
+loadScale(0, 3, minorScale);
 
 function setScaleType() {
         //let scaleSelect = document.getElementById("scales").options;
