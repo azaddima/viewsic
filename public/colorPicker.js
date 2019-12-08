@@ -1,7 +1,7 @@
 let canvas = document.getElementById("canvasWheel");
 let ctx = canvas.getContext("2d");
 let img = document.getElementById("sourceImage");
-let keyDisplay = document.getElementById("keyDisplay")
+let keyDisplay = document.getElementById("keyDisplay");
 
 let red = [254,0,1,255],
     orange = [254,127,1,255],
@@ -51,70 +51,87 @@ canvas.addEventListener("mousedown", function (e) {
     case red.toString():
      console.log('Red');
      keyDisplay.innerHTML = 'Root: C';
+     setScaleType(0);
      break;
     case orange.toString():
       console.log('Orange');
       keyDisplay.innerHTML = 'Root: C#';
+      setScaleType(1);
       break;
     case yellow.toString():
       console.log('Yellow');
       keyDisplay.innerHTML = 'Root: D';
-      break;
-    case green.toString():
-      console.log('Green');
-      keyDisplay.innerHTML = 'Root: E';
-      break;
-    case green0.toString():
-      console.log('Green');
-      keyDisplay.innerHTML = 'Root: E';
-      break;
-    case springGreen.toString():
-      console.log('Spring green');
-      keyDisplay.innerHTML = 'Root: F';
+      setScaleType(2);
       break;
     case lightGreen.toString():
       console.log('Light Green');
       keyDisplay.innerHTML = 'Root: D#';
+      setScaleType(3);
+      break;
+    case green.toString():
+      console.log('Green');
+      keyDisplay.innerHTML = 'Root: E';
+      setScaleType(4);
+      break;
+    case green0.toString():
+      console.log('Green');
+      keyDisplay.innerHTML = 'Root: E';
+      setScaleType(4);
+      break;
+    case springGreen.toString():
+      console.log('Spring green');
+      keyDisplay.innerHTML = 'Root: F';
+      setScaleType(5);
       break;
     case cyan.toString():
       console.log('Cyan');
       keyDisplay.innerHTML = 'Root: F#';
+      setScaleType(6);
       break;
     case cyan1.toString():
       console.log('Cyan');
       keyDisplay.innerHTML = 'Root: F#';
+      setScaleType(6);
       break;
     case lightBlue.toString():
       console.log('Light Blue');
       keyDisplay.innerHTML = 'Root: G';
+      setScaleType(7);
       break;
     case blue.toString():
       console.log('Blue');
       keyDisplay.innerHTML = 'Root: G#';
+      setScaleType(8);
       break;
     case violet.toString():
       console.log('Violet');
       keyDisplay.innerHTML = 'Root: A';
+      setScaleType(9);
       break;
     case pink.toString():
       console.log('Pink');
       keyDisplay.innerHTML = 'Root: A#';
+      setScaleType(10);
       break;
     case pink254.toString():
       console.log('Pink');
       keyDisplay.innerHTML = 'Root: A#';
+      setScaleType(10);
       break;
     case magenta.toString():
       console.log('Magenta');
       keyDisplay.innerHTML = 'Root: B';
+      setScaleType(11);
       break;
     case magenta126.toString():
       console.log('Magenta');
       keyDisplay.innerHTML = 'Root: B';
+      setScaleType(11);
       break;
     case magenta127.toString():
       console.log('Magenta');
       keyDisplay.innerHTML = 'Root: B';
+      setScaleType(11);
       break;
     default:
       console.log('something went wrong :o')
