@@ -1,7 +1,7 @@
 let canvas = document.getElementById("canvasWheel");
 let ctx = canvas.getContext("2d");
 let img = document.getElementById("sourceImage");
-let keyDisplay = document.getElementById("keyDisplay")
+let keyDisplay = document.getElementById("keyDisplay");
 
 let red = [254,0,1,255],
     orange = [254,127,1,255],
