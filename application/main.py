@@ -195,7 +195,7 @@ def process_video():
 
             # frame is ready when frame is processed
             with lock:
-                outputFrame = frame
+                outputFrame = frame.copy()
 
         else:
             print('no video')
@@ -235,11 +235,16 @@ def generateData():
 
 
 def send_data():
-    return generateData()
+    return websocket_server.send(generateData())
 
+def start_main():
+    process_video()
+    print('hi')
+    send_data()
 
 if __name__ == '__main__':
     # start a thread that will perform motion detection
-    t = threading.Thread(target=process_video(), args=[])
+    t = threading.Thread(target=start_main(), args=[])
     t.daemon = True
     t.start()
+

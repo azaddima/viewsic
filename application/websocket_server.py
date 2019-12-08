@@ -7,7 +7,7 @@ import queue
 messages = queue.Queue()
 receivedMessages = queue.Queue()
 
-sleepTime = 0.3
+sleepTime = 0.001
 def changeSleepTime(value):
     global sleepTime
     sleepTime = value
