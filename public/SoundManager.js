@@ -18,12 +18,12 @@ function loadScale(keyNote, octave, scale){
 // default scale
 loadScale(0, 3, minorScale);
 
-function setScaleType() {
+function setScaleType(rootNote) {
         //let scaleSelect = document.getElementById("scales").options;
     selectedScaleIndex = document.getElementById("scales").selectedIndex;
     console.log('scale changed to: ' + selectedScaleIndex);
 
-    loadScale(octave, key, scaleList[selectedScaleIndex]);
+    loadScale(octave, rootNote, scaleList[selectedScaleIndex]);
 }
 
 
