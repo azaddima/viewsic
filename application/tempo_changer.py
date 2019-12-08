@@ -10,5 +10,5 @@ def change_global_tempo(bpm):
 
     sec = 1 / (bpm / 60)
     message_interval = sec
-
     print('intervall changed to ' + str(sec))
+

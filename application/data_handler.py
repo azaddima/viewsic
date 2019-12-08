@@ -1,6 +1,6 @@
-#from application import tempo_changer
-import json
+from application import tempo_changer
 from application import websocket_server
+import json
 
 
 def send_message(data):
@@ -24,13 +24,18 @@ def send_message(data):
     return jsonData
 
 
-def process_message(data):
-    print(json.loads(data))
-    decoded_data = json.loads(data)
+def process_message():
+    messages = websocket_server.receivedMessages
+    if not messages.empty():
+        data = messages.get()
 
-    if decoded_data[0] == 'videostatus':
-        # code if video is paused / played
-        return 0
+        print(json.loads(data))
+        decoded_data = json.loads(data)
 
-    # if decoded_data[0] == 'bpm':
-    #     tempo_changer.update(int(decoded_data[1]))
+        if decoded_data[0] == 'videostatus':
+            # code if video is paused / played
+            return 0
+
+        if decoded_data[0] == 'bpm':
+            tempo_changer.update(int(decoded_data[1]))
+            websocket_server.changeSleepTime(tempo_changer.message_interval)

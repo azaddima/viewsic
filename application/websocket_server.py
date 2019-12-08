@@ -5,10 +5,9 @@ import websockets
 import queue
 
 messages = queue.Queue()
+receivedMessages = queue.Queue()
 
 sleepTime = 0.3
-
-
 def changeSleepTime(value):
     global sleepTime
     sleepTime = value
@@ -21,7 +20,7 @@ def send(data):
 
 async def producer_handler(websocket, path):
     while True:
-        await asyncio.sleep(0.3)
+        await asyncio.sleep()
         if not messages.empty():
             message = messages.get()
             # await websocket.send((message['message'], message['data']))
@@ -31,8 +30,8 @@ async def producer_handler(websocket, path):
 
 async def consumer_handler(websocket, path):
     async for message in websocket:
-        # print('message received')
-        data_handler.process_message(message)
+        print('message received: ' + message)
+        receivedMessages.put(message)
 
 
 # Event Loop erstellen, da der Server in einem anderem Thread laufen soll

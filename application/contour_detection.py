@@ -3,9 +3,12 @@ import cv2 as cv
 import numpy as np
 import argparse
 import random as rng
+import asyncio
+import threading
 import json
 from application import data_handler
 from application import websocket_server
+
 rng.seed(12345)
 
 websocket_server.startServer()
@@ -160,6 +163,7 @@ def get_contour_count():
     # return str(contour_count)
     return contour_count
 
+
 def set_contour_count(value):
     global contour_count
     contour_count = value
@@ -170,23 +174,60 @@ contour_count = 0
 frame_count = 0
 
 cap = cv.VideoCapture('../videos/roomTest.mp4')
-while cap.isOpened():
-    ret, frame = cap.read()
 
-    if ret:
-        cv.imshow('Video', frame)
-        find_contours_canny(frame, 30)
+lock = threading.Lock()
+outputFrame = None
 
-        # frame_count = (frame_count + 1) % 60
-        # if frame_count == 0:
-        websocket_server.send(json.dumps([contour_count, 0, 0]))
 
-    else:
-        print('no video')
-        cap.set(cv.CAP_PROP_POS_FRAMES, 0)
+def process_video():
+    global outputFrame, lock
 
-    if cv.waitKey(30) != -1:
-        break
+    while cap.isOpened():
+
+        ret, frame = cap.read()
+        frame_count = (frame_count + 1) % 60
+
+        if ret:
+            cv.imshow('Video', frame)
+            find_contours_canny(frame, 30)
+
+            websocket_server.send(json.dumps([contour_count, 0, 0]))
+            with lock:
+                outputFrame = frame
+
+        else:
+            print('no video')
+            cap.set(cv.CAP_PROP_POS_FRAMES, 0)
+
+        if cv.waitKey(30) != -1:
+            break
+
+
+
+def generate():
+    # grab global references to the output frame and lock variables
+    global outputFrame, lock
+
+    # loop over frames from the output stream
+    while True:
+        # wait until the lock is acquired
+        with lock:
+            # check if the output frame is available, otherwise skip
+            # the iteration of the loop
+            if outputFrame is None:
+                continue
+
+            # encode the frame in JPEG format
+            (flag, encodedImage) = cv.imencode(".jpg", outputFrame)
+
+            # ensure the frame was successfully encoded
+            if not flag:
+                continue
+
+        # yield the output frame in the byte format
+        yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
+               bytearray(encodedImage) + b'\r\n')
+
 
 cap.release()
 cv.waitKey()
