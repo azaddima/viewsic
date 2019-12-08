@@ -173,8 +173,6 @@ def set_contour_count(value):
 contour_count = 0
 frame_count = 0
 
-cap = cv.VideoCapture('../videos/roomTest.mp4')
-
 lock = threading.Lock()
 outputFrame = None
 
@@ -182,16 +180,20 @@ outputFrame = None
 def process_video():
     global outputFrame, lock
 
+    cap = cv.VideoCapture('../videos/roomTest.mp4')
     while cap.isOpened():
 
         ret, frame = cap.read()
-        frame_count = (frame_count + 1) % 60
+        # frame_count = (frame_count + 1) % 60
 
         if ret:
             cv.imshow('Video', frame)
             find_contours_canny(frame, 30)
 
             websocket_server.send(json.dumps([contour_count, 0, 0]))
+            print(contour_count)
+
+            # frame is ready when frame is processed
             with lock:
                 outputFrame = frame
 
@@ -202,9 +204,12 @@ def process_video():
         if cv.waitKey(30) != -1:
             break
 
+    cap.release()
+    cv.waitKey()
+    cv.destroyAllWindows()
 
 
-def generate():
+def generateData():
     # grab global references to the output frame and lock variables
     global outputFrame, lock
 
@@ -229,6 +234,12 @@ def generate():
                bytearray(encodedImage) + b'\r\n')
 
 
-cap.release()
-cv.waitKey()
-cv.destroyAllWindows()
+def send_data():
+    return generateData()
+
+
+if __name__ == '__main__':
+    # start a thread that will perform motion detection
+    t = threading.Thread(target=process_video(), args=[])
+    t.daemon = True
+    t.start()
