@@ -3,6 +3,7 @@ import cv2 as cv
 import numpy as np
 import argparse
 import random as rng
+import json
 from application import data_handler
 from application import websocket_server
 rng.seed(12345)
@@ -178,7 +179,7 @@ while cap.isOpened():
 
         # frame_count = (frame_count + 1) % 60
         # if frame_count == 0:
-        websocket_server.send(str(contour_count))
+        websocket_server.send(json.dumps([contour_count, 0, 0]))
 
     else:
         print('no video')

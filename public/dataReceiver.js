@@ -11,7 +11,7 @@ socket.onmessage = function (event) {
    }
 
    //todo - add update method which accesses all needed methods!
-   calcActivpeSound(data);
+   calcActiveSound(data);
    //changeOscillatorFreq(freqValueContour);
 };
 
