@@ -49,14 +49,6 @@ function setOscillatorType() {
         console.log('waveform set');
 }
 
-
-document.getElementById("playbtn").onclick = function () {
-
-    //todo - set default note?
-    playSound(0);
-
-};
-
 function playSound(freqValue = 0) {
     if(!isPlaying) {
         oscillator = context.createOscillator();

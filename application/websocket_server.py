@@ -21,7 +21,7 @@ def send(data):
 
 async def producer_handler(websocket, path):
     while True:
-        await asyncio.sleep(0.5)
+        await asyncio.sleep(2)
         if not messages.empty():
             message = messages.get()
             # await websocket.send((message['message'], message['data']))

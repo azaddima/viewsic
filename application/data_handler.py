@@ -1,5 +1,6 @@
 #from application import tempo_changer
 import json
+from application import websocket_server
 
 
 def send_message(data):
