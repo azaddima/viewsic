@@ -29,19 +29,17 @@ function sendMessage(type, data){
       }
 }
 
-function initialize(){
-	let socket = io.connect();
+
+// var socketio = io.connect('http://127.0.0.1:5000');
+//
+// socketio.on("connect", function(){
+//       console.log('Hello IM cibbectent');
+// });
+//
+// socketio.on("soundData", function(data){
+//       //document.getElementById("label").innerHTML = `Position: x=${data.x}, y=${data.y}`;
+//       console.log('sounddata received:' +  data);
+//       calcActiveSound(data);
+// });
 
 
-	socket.on("soundData", function(data){
-            //document.getElementById("label").innerHTML = `Position: x=${data.x}, y=${data.y}`;
-            console.log('sounddata received:' +  data);
-            calcActiveSound(data);
-	});
-
-	socket.on('outputFrame'), function (data) {
-        //decode byte array
-
-    }
-
-}

@@ -1,14 +1,13 @@
-from . import contour_detection
-from . import tempo_changer
+#from application import tempo_changer
 import json
 
-def send_message():
- 
+
+def send_message(data):
     # todo - calculate image not per frame but per time interval
     # why?: Less data is processed. With less processing comes better performance.
     data = []
     # contour count
-    contours = contour_detection.get_contour_count()
+    contours = data
     data.append(contours)
 
     # average colorSaturation in the image
@@ -25,7 +24,6 @@ def send_message():
 
 
 def process_message(data):
-
     print(json.loads(data))
     decoded_data = json.loads(data)
 
@@ -33,7 +31,5 @@ def process_message(data):
         # code if video is paused / played
         return 0
 
-    if decoded_data[0] == 'bpm':
-        tempo_changer.update(int(decoded_data[1]))
-
-
+    # if decoded_data[0] == 'bpm':
+    #     tempo_changer.update(int(decoded_data[1]))

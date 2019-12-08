@@ -3,10 +3,11 @@ import cv2 as cv
 import numpy as np
 import argparse
 import random as rng
+from application import data_handler
+from application import websocket_server
 rng.seed(12345)
 
-from python import flask_server
-flask_server.start()
+websocket_server.startServer()
 
 
 def moment_thresh_callback(val, frame_input):
@@ -165,26 +166,27 @@ def set_contour_count(value):
 
 # Data
 contour_count = 0
+frame_count = 0
 
-# VIDEO Processing
-def start_video():
-    cap = cv.VideoCapture('../videos/roomTest.mp4')
-    while cap.isOpened():
-        ret, frame = cap.read()
+cap = cv.VideoCapture('../videos/roomTest.mp4')
+while cap.isOpened():
+    ret, frame = cap.read()
 
-        if ret:
-            cv.imshow('Video', frame)
-            find_contours_canny(frame, 30)
-            flask_server.send(message= 'soundData', data={'contour': contour_count })
-        else:
-            print('no video')
-            cap.set(cv.CAP_PROP_POS_FRAMES, 0)
+    if ret:
+        cv.imshow('Video', frame)
+        find_contours_canny(frame, 30)
 
-        if cv.waitKey(30) != -1:
-            break
+        # frame_count = (frame_count + 1) % 60
+        # if frame_count == 0:
+        websocket_server.send(str(contour_count))
 
-    cap.release()
-    cv.waitKey()
-    cv.destroyAllWindows()
+    else:
+        print('no video')
+        cap.set(cv.CAP_PROP_POS_FRAMES, 0)
 
-start_video()
+    if cv.waitKey(30) != -1:
+        break
+
+cap.release()
+cv.waitKey()
+cv.destroyAllWindows()

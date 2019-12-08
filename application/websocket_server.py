@@ -2,25 +2,38 @@ import threading
 import asyncio
 import websockets
 
-from python import contour_detection
-from python import data_handler
-from python import tempo_changer
+import queue
+
+messages = queue.Queue()
 
 sleepTime = 0.3
+
+
 def changeSleepTime(value):
     global sleepTime
     sleepTime = value
 
 
+def send(data):
+    # messages.put({'message': message, 'data': data})
+    messages.put(data)
+
+
 async def producer_handler(websocket, path):
     while True:
-        await websocket.send(data_handler.send_message())
-        await asyncio.sleep(tempo_changer.message_interval)
+        if not messages.empty():
+            message = messages.get()
+            # await websocket.send((message['message'], message['data']))
+            print(message)
+            await websocket.send(message)
+            await asyncio.sleep(0.3)
+
 
 async def consumer_handler(websocket, path):
     async for message in websocket:
         # print('message received')
         data_handler.process_message(message)
+
 
 # Event Loop erstellen, da der Server in einem anderem Thread laufen soll
 loop = asyncio.new_event_loop()
@@ -37,10 +50,9 @@ def start_server(loop):
     asyncio.get_event_loop().run_forever()
 
 
-# Starten des Servers in einem Thread
-# Ein Daemon ist ein Thread, der sich selbst beendet, falls das Programm endet
-serverThread = threading.Thread(target=start_server, args=[loop], daemon=True)
-serverThread.start()
+def startServer():
+    # Starten des Servers in einem Thread
+    # Ein Daemon ist ein Thread, der sich selbst beendet, falls das Programm endet
+    serverThread = threading.Thread(target=start_server, args=[loop], daemon=True)
+    serverThread.start()
 
-# Start programm logic
-#contour_detection.start_video()
