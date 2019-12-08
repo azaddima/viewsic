@@ -5,7 +5,7 @@ let minorScale = [0, 2, 3, 5 , 7, 8, 10, 11, 12];
 let scaleList = [majorScale, minorScale, pentatonicMajor, pentatonicMinor];
 
 let octave = 3;
-let key = 3;
+let keyOf = 3;
 
 let activeScale = [];
 
@@ -15,28 +15,25 @@ let selectedScaleIndex = document.getElementById("scales").selectedIndex;
 function loadScale(keyNote, octave, scale){
     activeScale = createScale(keyNote, octave, scale );
 }
-// default scale
+// Default scale
 loadScale(0, 3, minorScale);
 
-function setScaleType(rootNote) {
-        //let scaleSelect = document.getElementById("scales").options;
+function setScaleType() {
+    // Update global variable
     selectedScaleIndex = document.getElementById("scales").selectedIndex;
     console.log('scale changed to: ' + selectedScaleIndex);
-
-    loadScale(octave, rootNote, scaleList[selectedScaleIndex]);
+    loadScale(keyOf, octave, scaleList[selectedScaleIndex]);
 }
 
 
-function changeKey(){
-    //CHANGE KEY CODE
-
-    loadScale(key, octave, scaleList[selectedScaleIndex]);
+function changeKey(note){
+    keyOf = note
+    loadScale(keyOf, octave, scaleList[selectedScaleIndex]);
 }
 
-function changeOctave(){
-    // CHANGE OCTAVE CODE
-
-    loadScale(key, octave, scaleList[selectedScaleIndex]);
+function changeOctave(note){
+    octave = note
+    loadScale(keyOf, octave, scaleList[selectedScaleIndex]);
 }
 
 
