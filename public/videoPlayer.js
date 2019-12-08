@@ -15,7 +15,6 @@ dialog.addEventListener("change", function () {
         source.setAttribute('src', '../videos/testVideo720p.mp4');
         source.setAttribute('type','video/mp4');
         video.appendChild(source);
-        video.play();
     }
     console.log(source.src);
 });
