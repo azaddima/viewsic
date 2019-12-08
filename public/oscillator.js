@@ -57,7 +57,7 @@ document.getElementById("playbtn").onclick = function () {
 
 };
 
-function playSound(freqValue) {
+function playSound(freqValue = 0) {
     if(!isPlaying) {
         oscillator = context.createOscillator();
         oscillator.connect(gainNode);
