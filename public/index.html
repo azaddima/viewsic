@@ -47,10 +47,13 @@
                 <input type="range" min="50" max="240" step="1" value="120" class="sliderVolume" id="tempo">
             </div>
             <div class="launchControl" >
-            <div class="playPause">
+            <div class="playPause" style="margin-left: -40px">
+            <div style="bottom: 15%">
+                <button id="submitFile" class="button">Select Video</button>
+            </div>
                 <span>
-                    <button id="playbtn">Play!</button>
-                    <button id="stopbtn" onclick="stopSound()">Stop!</button>
+                    <button id="playbtn" class="button">Play!</button>
+                    <button id="stopbtn" class="button" onclick="stopSound()">Stop!</button>
                 </span>
             </div>
             <div class="slidecontainer">

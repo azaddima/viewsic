@@ -51,16 +51,20 @@ html, body {
 }
 
 .button {
-  background-color: lightgrey;
+  background-color: whitesmoke;
   border: 1px solid grey;
-  border-radius: 12px;
+  border-radius: 5px;
   color: black;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-family: Courier, serif;
-  font-size: 5px;
-  margin: 4px 2px;
+  font-size: 18px;
+  margin: 5px 2px 5px -5px;
+  width: 170px;
+  height: 40px;
+  left: 100%;
+
 }
 
 input[type="text"] {
@@ -93,9 +97,11 @@ input[type="text"] {
 }
 
 .playPause {
-    position: absolute;
-    bottom: 15%;
-    right: 22%;
+  position: absolute;
+  bottom: 15%;
+  right: 50%;
+  left: 25%;
+
 }
 
 .slidecontainer {
@@ -186,6 +192,8 @@ input[type="text"] {
   width: 1px;
   visibility: hidden;
 }
+
+
 
 video {
   width: 100%;
