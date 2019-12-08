@@ -64,29 +64,30 @@ html, body {
   width: 170px;
   height: 40px;
   left: 100%;
-
+  cursor: pointer;
 }
 
-input[type="text"] {
-  background-color: lightgrey;
+.button:hover{
+  background-color: cornflowerblue;
+  opacity: 1;
+}
+
+input[type="file"] {
+  background-color: whitesmoke;
   border: 1px solid grey;
   border-radius: 12px;
-  color: black;
-  height: 36px;
-  width: 55px;
-  text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-family: Courier, serif;
-  font-size: 20px;
-  margin-left: 40px ;
-  margin-top: 3px;
+  font-size: 18px;
+  margin: 5px 2px 5px -5px;
+  width: 170px;
+  height: 50px;
+  left: 100%;
 }
 
 .sliderVolume {
   -webkit-appearance: none;
   position: absolute;
-
   width: 100%;
   height: 25px;
   background: #d3d3d3;
@@ -101,7 +102,6 @@ input[type="text"] {
   bottom: 15%;
   right: 50%;
   left: 25%;
-
 }
 
 .slidecontainer {
@@ -193,7 +193,21 @@ input[type="text"] {
   visibility: hidden;
 }
 
+#scales{
+  margin-left: 15px;
+  margin-top: 5px;
+  width: 80%;
+  height: 30px;
+  cursor: pointer;
+}
 
+#waveform{
+  margin-left: 15px;
+  margin-top: 5px;
+  width: 80%;
+  height: 30px;
+  cursor: pointer;
+}
 
 video {
   width: 100%;

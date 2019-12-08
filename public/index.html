@@ -9,8 +9,9 @@
     <div class="mainContakiner">
         <div class="sidenav" >
             <div class="colorwheel">
-                <p id="keyDisplay" style="font-size:18px; position: absolute; margin-left: 38px; margin-top: 68px">Root: C</p>
-                <canvas id="canvasWheel" width="160" height="160" style="width: 160px; height: 160px;">
+                <p id="keyDisplay" style="font-size:18px; position: absolute; margin-left: 38px; margin-top: 68px">
+                    Root: C</p>
+                <canvas id="canvasWheel" width="160" height="160" style="width: 160px; height: 160px; cursor: pointer">
                 Your browser does not support the HTML5 canvas tag.
                 </canvas>
                 <img id="sourceImage" class="color" src="../images/ColorWheel.png" alt="wheel">
@@ -19,8 +20,7 @@
                 <span>
                     <p1 style="font-size: 15px; margin-left: 5px; margin-bottom: 25px">Scale: </p1>
                 </span>
-                <select style="margin-left: 15px; margin-top: 5px; width: 80%; height: 30px" id="scales"
-                        onchange="setScaleType()">
+                <select id="scales" onchange="setScaleType()">
                     <option value="0">Major</option>
                     <option value="1" selected>Minor</option>
                     <option value="2">Pentatonic Major</option>
@@ -31,8 +31,7 @@
                 <span>
                     <p1 style="font-size: 15px; margin-left: 5px; margin-bottom: 25px">Current waveform: </p1>
                 </span>
-                <select style="margin-left: 15px; margin-top: 5px; width: 80%; height: 30px" id="waveform"
-                        onchange="setOscillatorType()">
+                <select id="waveform" onchange="setOscillatorType()">
                     <option value="sine">sine</option>
                     <option value="square" selected>square</option>
                     <option value="sawtooth">sawtooth</option>
@@ -49,8 +48,8 @@
                 <button id="submitFile" class="button">Select Video</button>
             </div>
                 <span>
-                    <button id="playbtn" class="button" onclick="playSound()">Play!</button>
-                    <button id="stopbtn" class="button" onclick="stopSound()">Stop!</button>
+                    <button id="playbtn" class="button" onclick="playSound()">Play</button>
+                    <button id="stopbtn" class="button" onclick="stopSound()">Stop</button>
                 </span>
             </div>
             <div class="slidecontainer">
@@ -60,7 +59,6 @@
             </div>
         </div>
         <video id="video" muted loop>
-            <source src="../videos/testVideo720p.mp4" type="video/mp4">
         </video>
     </div>
 
@@ -75,5 +73,5 @@
     <script src="colorPicker.js"></script>
     <script src="videoPlayer.js"></script>
 
-    </body>
+</body>
 </html>
