@@ -1,17 +1,33 @@
 from __future__ import print_function
+
+import argparse
+import json
+import random as rng
+import threading
+import time
+
+import imutils
+from imutils.video import FileVideoStream, VideoStream
+
 import cv2 as cv
 import numpy as np
-import argparse
-import random as rng
-import asyncio
-import threading
-import json
-from application import data_handler
-from application import websocket_server
+from flask import Flask
+from flask import Response
+from flask import render_template
+
+import websocket_server
 
 rng.seed(12345)
 
 websocket_server.startServer()
+
+app = Flask(__name__)
+
+
+@app.route("/")
+def index():
+    # return the rendered template
+    return render_template("index.html")
 
 
 def moment_thresh_callback(val, frame_input):
@@ -152,8 +168,8 @@ def find_contours_canny(frame_input, threshold):
         cv.drawContours(frame_input, [cnt], 0, color, 2, cv.LINE_8, hierarchy, 0)
 
     # show image
-    cv.imshow('Video Test', drawing)
-    cv.imshow('threshold Image', frame_input)
+    # cv.imshow('Video Test', drawing)
+    # cv.imshow('threshold Image', frame_input)
 
     # print metadata
     set_contour_count(len(contours))
@@ -176,18 +192,18 @@ frame_count = 0
 lock = threading.Lock()
 outputFrame = None
 
+cap = cv.VideoCapture('/Users/azadamid/spaces/unispace/OneDrive - haw-hamburg.de/Semester 6/AVPRG/viewsic/videos/roomTest.mp4')
 
 def process_video():
     global outputFrame, lock
 
-    cap = cv.VideoCapture('../videos/roomTest.mp4')
     while cap.isOpened():
 
         ret, frame = cap.read()
         # frame_count = (frame_count + 1) % 60
 
         if ret:
-            cv.imshow('Video', frame)
+            # cv.imshow('Video', frame)
             find_contours_canny(frame, 30)
 
             websocket_server.send(json.dumps([contour_count, 0, 0]))
@@ -208,6 +224,32 @@ def process_video():
     cv.waitKey()
     cv.destroyAllWindows()
 
+
+
+
+def process_video_fast():
+    fvs = FileVideoStream("/Users/azadamid/spaces/unispace/OneDrive - haw-hamburg.de/Semester 6/AVPRG/viewsic/videos/roomTest.mp4").start()
+    time.sleep(1.0)
+
+    #todo NOT true plwasw
+    while True:
+        print('hello')
+
+        frame = fvs.read()
+
+        find_contours_canny(frame, 30)
+        websocket_server.send(json.dumps([contour_count, 0, 0]))
+        print(contour_count)
+
+        # frame is ready when frame is processed
+        # with lock:
+        #     outputFrame = frame.copy()
+
+        # show the frame and update the FPS counter
+        if cv.waitKey(30) != -1:
+            break
+
+        cv.waitKey(1)
 
 def generateData():
     # grab global references to the output frame and lock variables
@@ -237,14 +279,31 @@ def generateData():
 def send_data():
     return websocket_server.send(generateData())
 
-def start_main():
-    process_video()
-    print('hi')
-    send_data()
+
+@app.route("/video_feed")
+def video_feed():
+    # return the response generated along with the specific media
+    # type (mime type)
+    return Response(generateData(),
+                    mimetype="multipart/x-mixed-replace; boundary=frame")
+
 
 if __name__ == '__main__':
+    # ap = argparse.ArgumentParser()
+    # ap.add_argument("-i", "--ip", type=str, required=True,
+    #                 help="ip address of the device")
+    # ap.add_argument("-o", "--port", type=int, required=True,
+    #                 help="ephemeral port number of the server (1024 to 65535)")
+    # ap.add_argument("-f", "--frame-count", type=int, default=32,
+    #                 help="# of frames used to construct the background model")
+    # args = vars(ap.parse_args())
+
     # start a thread that will perform motion detection
-    t = threading.Thread(target=start_main(), args=[])
+    t = threading.Thread(target=process_video_fast)
     t.daemon = True
     t.start()
+
+    # app.run(host=args["ip"], port=args["port"], debug=True,
+    #         threaded=True, use_reloader=False)
+    app.run(host='127.0.0.1', port=8888)
 

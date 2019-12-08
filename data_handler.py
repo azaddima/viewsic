@@ -1,5 +1,5 @@
-from application import tempo_changer
-from application import websocket_server
+import tempo_changer
+import websocket_server
 import json
 
 
