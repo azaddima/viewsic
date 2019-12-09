@@ -3,6 +3,7 @@ import asyncio
 import websockets
 
 import queue
+import data_handler
 
 messages = queue.Queue()
 receivedMessages = queue.Queue()
@@ -28,7 +29,7 @@ async def producer_handler(websocket, path):
         if not messages.empty():
             message = messages.get()
             # await websocket.send((message['message'], message['data']))
-            print(message)
+            print(message + ' sending message')
             await websocket.send(message)
 
 
@@ -36,6 +37,8 @@ async def consumer_handler(websocket, path):
     async for message in websocket:
         print('message received: ' + message)
         receivedMessages.put(message)
+        data_handler.process_message()
+
 
 
 # Event Loop erstellen, da der Server in einem anderem Thread laufen soll

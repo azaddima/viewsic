@@ -16,6 +16,7 @@ from flask import Response
 from flask import render_template
 
 import websocket_server
+import data_handler
 
 rng.seed(12345)
 
@@ -197,6 +198,7 @@ cap = cv.VideoCapture('/Users/azadamid/spaces/unispace/OneDrive - haw-hamburg.de
 
 def process_video():
     global outputFrame, lock, frame_count
+    data_handler.process_message()
 
     while cap.isOpened():
 
@@ -209,7 +211,7 @@ def process_video():
 
             if websocket_server.allowMessage:
                 websocket_server.send(json.dumps([contour_count, 0, 0]))
-                print(contour_count)
+                # print(contour_count)
 
             # frame is ready when frame is processed
             with lock:

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../public/style.css">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
     <title>Viewsic</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
@@ -14,7 +14,7 @@
                 <canvas id="canvasWheel" width="160" height="160" style="width: 160px; height: 160px; cursor: pointer">
                 Your browser does not support the HTML5 canvas tag.
                 </canvas>
-                <img id="sourceImage" class="color" src="../images/ColorWheel.png" alt="wheel">
+                <img id="sourceImage" class="color" src="static/images/ColorWheel.png" alt="wheel">
             </div>
             <div class="scaleSelection">
                 <span>
@@ -59,7 +59,9 @@
             </div>
             </div>
         </div>
-        <img src="{{ url_for('video_feed') }}">
+        <div id="videoFeed">
+            <img src="{{ url_for('video_feed') }}">
+        </div>
 <!--        <video id="video" muted loop>-->
 <!--        </video>-->
     </div>
@@ -68,12 +70,12 @@
 
 
 
-    <script src="../public/oscillator.js"></script>
-    <script src="../public/dataReceiver.js"></script>
-    <script src="../public/notes.js"></script>
-    <script src="../public/SoundManager.js"></script>
-    <script src="../public/colorPicker.js"></script>
-    <script src="../public/videoPlayer.js"></script>
+    <script src="static/oscillator.js"></script>
+    <script src="static/dataReceiver.js"></script>
+    <script src="static/notes.js"></script>
+    <script src="static/SoundManager.js"></script>
+    <script src="static/colorPicker.js"></script>
+    <script src="static/videoPlayer.js"></script>
 
 </body>
 </html>
