@@ -6,8 +6,9 @@ import queue
 
 messages = queue.Queue()
 receivedMessages = queue.Queue()
+allowMessage = True
 
-sleepTime = 0.001
+sleepTime = 0.25
 def changeSleepTime(value):
     global sleepTime
     sleepTime = value
@@ -19,8 +20,11 @@ def send(data):
 
 
 async def producer_handler(websocket, path):
+    global allowMessage
     while True:
+        allowMessage = True
         await asyncio.sleep(sleepTime)
+        allowMessage = False
         if not messages.empty():
             message = messages.get()
             # await websocket.send((message['message'], message['data']))

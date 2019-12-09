@@ -193,9 +193,10 @@ lock = threading.Lock()
 outputFrame = None
 
 cap = cv.VideoCapture('/Users/azadamid/spaces/unispace/OneDrive - haw-hamburg.de/Semester 6/AVPRG/viewsic/videos/roomTest.mp4')
+# cap = VideoStream(src=0).start()
 
 def process_video():
-    global outputFrame, lock
+    global outputFrame, lock, frame_count
 
     while cap.isOpened():
 
@@ -204,14 +205,17 @@ def process_video():
 
         if ret:
             # cv.imshow('Video', frame)
-            find_contours_canny(frame, 30)
+            find_contours_canny(frame.copy(), 30)
 
-            websocket_server.send(json.dumps([contour_count, 0, 0]))
-            print(contour_count)
+            if websocket_server.allowMessage:
+                websocket_server.send(json.dumps([contour_count, 0, 0]))
+                print(contour_count)
 
             # frame is ready when frame is processed
             with lock:
                 outputFrame = frame.copy()
+
+            frame_count = frame_count + 1
 
         else:
             print('no video')
@@ -228,28 +232,39 @@ def process_video():
 
 
 def process_video_fast():
+    global outputFrame, lock
+
     fvs = FileVideoStream("/Users/azadamid/spaces/unispace/OneDrive - haw-hamburg.de/Semester 6/AVPRG/viewsic/videos/roomTest.mp4").start()
     time.sleep(1.0)
 
     #todo NOT true plwasw
-    while True:
+
+    while fvs.stream.isOpened():
         print('hello')
 
-        frame = fvs.read()
+        frame = fvs.stream.read()
 
-        find_contours_canny(frame, 30)
-        websocket_server.send(json.dumps([contour_count, 0, 0]))
-        print(contour_count)
+        if fvs.more():
 
-        # frame is ready when frame is processed
-        # with lock:
-        #     outputFrame = frame.copy()
+            find_contours_canny(frame, 30)
+            # websocket_server.send(json.dumps([contour_count, 0, 0]))
+            print(contour_count)
 
-        # show the frame and update the FPS counter
-        if cv.waitKey(30) != -1:
-            break
+            # frame is ready when frame is processed
+            with lock:
+                outputFrame = frame.copy()
 
-        cv.waitKey(1)
+            # show the frame and update the FPS counter
+            if cv.waitKey(30) != -1:
+                break
+
+        else:
+            print('no video')
+            fvs.stream.set(cv.CAP_PROP_POS_FRAMES, 0)
+
+            cv.waitKey(1)
+
+    fvs.stop()
 
 def generateData():
     # grab global references to the output frame and lock variables
@@ -270,7 +285,7 @@ def generateData():
             # ensure the frame was successfully encoded
             if not flag:
                 continue
-
+        time.sleep(0.03)
         # yield the output frame in the byte format
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
                bytearray(encodedImage) + b'\r\n')
@@ -299,11 +314,11 @@ if __name__ == '__main__':
     # args = vars(ap.parse_args())
 
     # start a thread that will perform motion detection
-    t = threading.Thread(target=process_video_fast)
+    t = threading.Thread(target=process_video)
     t.daemon = True
     t.start()
 
     # app.run(host=args["ip"], port=args["port"], debug=True,
     #         threaded=True, use_reloader=False)
-    app.run(host='127.0.0.1', port=8888)
+    app.run(host='127.0.0.1', port=8887)
 
