@@ -50,6 +50,7 @@ function setOscillatorType() {
 }
 
 function playSound(freqValue = 0) {
+
     if(!isPlaying) {
         oscillator = context.createOscillator();
         oscillator.connect(gainNode);
@@ -57,6 +58,8 @@ function playSound(freqValue = 0) {
         oscillator.frequency.value = freqValue;
         oscillator.start(context.currentTime);
         isPlaying = true;
+
+       sendMessage('videostatus', 'True')
     }
 }
 
@@ -64,9 +67,12 @@ let sec = 1 / (60 * (60/120));
 
 function stopSound() {
     if(oscillator){
+        console.log('STOP')
         oscillator.stop(context.currentTime);
         oscillator.disconnect();
         isPlaying = false;
+
+       sendMessage('videostatus', 'False')
     }
 }
 

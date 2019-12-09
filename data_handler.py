@@ -2,6 +2,7 @@ import tempo_changer
 import websocket_server
 import json
 
+videoStatus = True
 
 def send_message(data):
     # todo - calculate image not per frame but per time interval
@@ -25,6 +26,8 @@ def send_message(data):
 
 
 def process_message():
+    global videoStatus
+
     messages = websocket_server.receivedMessages
     if not messages.empty():
         data = messages.get()
@@ -33,9 +36,16 @@ def process_message():
         decoded_data = json.loads(data)
 
         if decoded_data[0] == 'videostatus':
-            # code if video is paused / played
+            if str(decoded_data[1]) == 'True':
+                videoStatus = True
+                print('Videostatus changed: ' + str(videoStatus) )
+            if str(decoded_data[1]) == 'False':
+                videoStatus = False
+                print('Videostatus changed: ' + str(videoStatus) )
+
             return 0
 
         if decoded_data[0] == 'bpm':
             tempo_changer.update(int(decoded_data[1]))
             websocket_server.changeSleepTime(tempo_changer.message_interval)
+

@@ -193,7 +193,8 @@ frame_count = 0
 lock = threading.Lock()
 outputFrame = None
 
-cap = cv.VideoCapture('/Users/azadamid/spaces/unispace/OneDrive - haw-hamburg.de/Semester 6/AVPRG/viewsic/videos/roomTest.mp4')
+
+cap = cv.VideoCapture('videos/testVideo720p.mp4')
 # cap = VideoStream(src=0).start()
 
 def process_video():
@@ -202,29 +203,31 @@ def process_video():
 
     while cap.isOpened():
 
-        ret, frame = cap.read()
-        # frame_count = (frame_count + 1) % 60
+        if data_handler.videoStatus:
+            # print(data_handler.videoStatus)
+            ret, frame = cap.read()
+            # frame_count = (frame_count + 1) % 60
 
-        if ret:
-            # cv.imshow('Video', frame)
-            find_contours_canny(frame.copy(), 30)
+            if ret:
+                # cv.imshow('Video', frame)
+                find_contours_canny(frame.copy(), 30)
 
-            if websocket_server.allowMessage:
-                websocket_server.send(json.dumps([contour_count, 0, 0]))
-                # print(contour_count)
+                if websocket_server.allowMessage:
+                    websocket_server.send(json.dumps([contour_count, 0, 0]))
+                    # print(contour_count)
 
-            # frame is ready when frame is processed
-            with lock:
-                outputFrame = frame.copy()
+                # frame is ready when frame is processed
+                with lock:
+                    outputFrame = frame.copy()
 
-            frame_count = frame_count + 1
+                frame_count = frame_count + 1
 
-        else:
-            print('no video')
-            cap.set(cv.CAP_PROP_POS_FRAMES, 0)
+            else:
+                print('no video')
+                cap.set(cv.CAP_PROP_POS_FRAMES, 0)
 
-        if cv.waitKey(30) != -1:
-            break
+            if cv.waitKey(30) != -1:
+                break
 
     cap.release()
     cv.waitKey()

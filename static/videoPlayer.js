@@ -21,7 +21,9 @@ dialog.addEventListener("change", function () {
 
 document.getElementById("playbtn").onclick = function () {
     // video.play();
+
     playSound();
+
 };
 
 document.getElementById("stopbtn").onclick = function () {

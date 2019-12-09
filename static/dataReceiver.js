@@ -23,7 +23,7 @@ function sendMessage(type, data){
 
       if(sendSocket.readyState == WebSocket.OPEN){
             console.log('trying to send message');
-            sendSocket.send(jsonData);
+            // sendSocket.send(jsonData);
             sendSocket.send(jsonData);
 
       }

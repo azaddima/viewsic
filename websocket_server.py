@@ -29,7 +29,7 @@ async def producer_handler(websocket, path):
         if not messages.empty():
             message = messages.get()
             # await websocket.send((message['message'], message['data']))
-            print(message + ' sending message')
+            # print(message + ' sending message')
             await websocket.send(message)
 
 
