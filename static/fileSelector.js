@@ -29,8 +29,7 @@ console.log(fileContent, typeof fileContent);
 let index = fileContent.search(',');
 let byteArray = fileContent.slice(index + 1);
 console.log(byteArray);
-
-$('body').append('<video id="video" src="' + fileContent + '" width="100%" height="auto" muted loop></video>');
+sendMessage("videoFile", byteArray);
 };
 
 // Get the selected video from Dialog
