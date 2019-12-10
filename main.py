@@ -5,6 +5,7 @@ import json
 import random as rng
 import threading
 import time
+import tempo_changer
 
 import imutils
 from imutils.video import FileVideoStream, VideoStream
@@ -192,28 +193,33 @@ frame_count = 0
 
 lock = threading.Lock()
 outputFrame = None
-
+allow_process = True
 
 cap = cv.VideoCapture('videos/testVideo720p.mp4')
-# cap = VideoStream(src=0).start()
 
+
+# cap = VideoStream(src=0).start()
 def process_video():
-    global outputFrame, lock, frame_count
+    global outputFrame, lock, frame_count, allow_process
     data_handler.process_message()
 
     while cap.isOpened():
 
         if data_handler.videoStatus:
+            time.sleep(0.0333)
             # print(data_handler.videoStatus)
             ret, frame = cap.read()
             # frame_count = (frame_count + 1) % 60
 
             if ret:
                 # cv.imshow('Video', frame)
-                find_contours_canny(frame.copy(), 30)
 
-                if websocket_server.allowMessage:
+                # if websocket_server.allowMessage:
+                if allow_process:
+                    find_contours_canny(frame.copy(), 30)
+                    tempo_changer.tempo_contour(contour_count)
                     websocket_server.send(json.dumps([contour_count, 0, 0]))
+                    allow_process = False
                     # print(contour_count)
 
                 # frame is ready when frame is processed
@@ -234,42 +240,14 @@ def process_video():
     cv.destroyAllWindows()
 
 
+def wait_for_time():
+    global allow_process
+    while True:
+        print('freeze process sec')
+        time.sleep(tempo_changer.message_interval)
+        allow_process = True
 
 
-def process_video_fast():
-    global outputFrame, lock
-
-    fvs = FileVideoStream("/Users/azadamid/spaces/unispace/OneDrive - haw-hamburg.de/Semester 6/AVPRG/viewsic/videos/roomTest.mp4").start()
-    time.sleep(1.0)
-
-    #todo NOT true plwasw
-
-    while fvs.stream.isOpened():
-        print('hello')
-
-        frame = fvs.stream.read()
-
-        if fvs.more():
-
-            find_contours_canny(frame, 30)
-            # websocket_server.send(json.dumps([contour_count, 0, 0]))
-            print(contour_count)
-
-            # frame is ready when frame is processed
-            with lock:
-                outputFrame = frame.copy()
-
-            # show the frame and update the FPS counter
-            if cv.waitKey(30) != -1:
-                break
-
-        else:
-            print('no video')
-            fvs.stream.set(cv.CAP_PROP_POS_FRAMES, 0)
-
-            cv.waitKey(1)
-
-    fvs.stop()
 
 def generateData():
     # grab global references to the output frame and lock variables
@@ -290,7 +268,6 @@ def generateData():
             # ensure the frame was successfully encoded
             if not flag:
                 continue
-        time.sleep(0.03)
         # yield the output frame in the byte format
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
                bytearray(encodedImage) + b'\r\n')
@@ -309,21 +286,17 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    # ap = argparse.ArgumentParser()
-    # ap.add_argument("-i", "--ip", type=str, required=True,
-    #                 help="ip address of the device")
-    # ap.add_argument("-o", "--port", type=int, required=True,
-    #                 help="ephemeral port number of the server (1024 to 65535)")
-    # ap.add_argument("-f", "--frame-count", type=int, default=32,
-    #                 help="# of frames used to construct the background model")
-    # args = vars(ap.parse_args())
 
     # start a thread that will perform motion detection
     t = threading.Thread(target=process_video)
     t.daemon = True
+
+    t2 = threading.Thread(target=wait_for_time)
+    t2.daemon = True
+
     t.start()
+    t2.start()
 
     # app.run(host=args["ip"], port=args["port"], debug=True,
     #         threaded=True, use_reloader=False)
     app.run(host='127.0.0.1', port=8887)
-

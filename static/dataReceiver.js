@@ -21,7 +21,7 @@ function sendMessage(type, data){
       dataArray = [type, data];
       jsonData = JSON.stringify(dataArray);
 
-      if(sendSocket.readyState == WebSocket.OPEN){
+      if(sendSocket.readyState === WebSocket.OPEN){
             console.log('trying to send message');
             // sendSocket.send(jsonData);
             sendSocket.send(jsonData);

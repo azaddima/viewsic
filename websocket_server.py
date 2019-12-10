@@ -9,7 +9,8 @@ messages = queue.Queue()
 receivedMessages = queue.Queue()
 allowMessage = True
 
-sleepTime = 0.25
+# todo - CHANGE SLEEP TOME FOR ACCURATE PLAYBACK
+sleepTime = 0.01
 def changeSleepTime(value):
     global sleepTime
     sleepTime = value

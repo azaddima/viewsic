@@ -4,6 +4,7 @@ import json
 
 videoStatus = True
 
+
 def send_message(data):
     # todo - calculate image not per frame but per time interval
     # why?: Less data is processed. With less processing comes better performance.
@@ -38,14 +39,13 @@ def process_message():
         if decoded_data[0] == 'videostatus':
             if str(decoded_data[1]) == 'True':
                 videoStatus = True
-                print('Videostatus changed: ' + str(videoStatus) )
+                print('Videostatus changed: ' + str(videoStatus))
             if str(decoded_data[1]) == 'False':
                 videoStatus = False
-                print('Videostatus changed: ' + str(videoStatus) )
+                print('Videostatus changed: ' + str(videoStatus))
 
             return 0
 
         if decoded_data[0] == 'bpm':
             tempo_changer.update(int(decoded_data[1]))
-            websocket_server.changeSleepTime(tempo_changer.message_interval)
-
+            # websocket_server.changeSleepTime(tempo_changer.message_interval)
