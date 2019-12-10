@@ -176,6 +176,8 @@ def find_contours_canny(frame_input, threshold):
     # print metadata
     set_contour_count(len(contours))
 
+    return drawing, frame_input
+
 
 def get_contour_count():
     # return str(contour_count)
@@ -195,12 +197,14 @@ lock = threading.Lock()
 outputFrame = None
 allow_process = True
 
+wanted_frame = 0
+
 cap = cv.VideoCapture('videos/testVideo720p.mp4')
 
 
 # cap = VideoStream(src=0).start()
 def process_video():
-    global outputFrame, lock, frame_count, allow_process
+    global outputFrame, lock, frame_count, allow_process, wanted_frame
     data_handler.process_message()
 
     while cap.isOpened():
@@ -215,16 +219,24 @@ def process_video():
                 # cv.imshow('Video', frame)
 
                 # if websocket_server.allowMessage:
+                frame_only_contour, frame_with_contour = find_contours_canny(frame.copy(), 30)
                 if allow_process:
-                    find_contours_canny(frame.copy(), 30)
+                    # find_contours_canny(frame.copy(), 30)
                     tempo_changer.tempo_contour(contour_count)
                     websocket_server.send(json.dumps([contour_count, 0, 0]))
                     allow_process = False
                     # print(contour_count)
-
                 # frame is ready when frame is processed
                 with lock:
-                    outputFrame = frame.copy()
+                    # outputFrame = frame.copy()
+                    wanted_frame = data_handler.selectedFrameIndex
+
+                    if wanted_frame == 0:
+                        outputFrame = frame.copy()
+                    if wanted_frame == 1:
+                        outputFrame = frame_only_contour.copy()
+                    if wanted_frame == 2:
+                        outputFrame = frame_with_contour.copy()
 
                 frame_count = frame_count + 1
 

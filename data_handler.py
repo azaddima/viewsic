@@ -3,6 +3,7 @@ import websocket_server
 import json
 
 videoStatus = True
+selectedFrameIndex = 0
 
 
 def send_message(data):
@@ -27,7 +28,7 @@ def send_message(data):
 
 
 def process_message():
-    global videoStatus
+    global videoStatus, selectedFrameIndex
 
     messages = websocket_server.receivedMessages
     if not messages.empty():
@@ -49,3 +50,6 @@ def process_message():
         if decoded_data[0] == 'bpm':
             tempo_changer.update(int(decoded_data[1]))
             # websocket_server.changeSleepTime(tempo_changer.message_interval)
+
+        if decoded_data[0] == 'ViewSelectionCounter':
+            selectedFrameIndex = decoded_data[1]
